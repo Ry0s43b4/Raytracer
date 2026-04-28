@@ -42,6 +42,25 @@ typedef struct Plane
     int cb;
 } Plane_t;
 
+typedef struct PointLight {
+    int x;
+    int y;
+    int z;
+} PointLight_t;
+
+typedef struct DirectionalLight {
+    int x;
+    int y;
+    int z;
+} DirectionalLight_t;
+
+typedef struct Light {
+    double ambient;
+    double diffuse;
+    std::vector<PointLight_t> points;
+    std::vector<DirectionalLight_t> directionals;
+} Light_t;
+
 typedef struct Parsing {
     Camera_t c;
     std::vector<Sphere_t> s;
@@ -64,6 +83,11 @@ class Parser {
 
         // THIS GETTER IS FOR PLANES
         std::vector<Plane_t> GetPlane();
+
+        // THIS GETTER IS FOR LIGHTS
+        Light_t GetLight();
+        std::vector<PointLight_t> GetPointLight();
+        std::vector<DirectionalLight_t> GetDirectionalLight(); // FONCTION A VOIR CAR PAS IMPLEMENTER DANS LE FICHIER DE CONFIG
     private:
         libconfig::Config cfg;
         std::string filepath;

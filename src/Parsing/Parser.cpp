@@ -77,3 +77,37 @@ std::vector<Plane_t> Parser::GetPlane()
     }
     return vp;
 }
+
+std::vector<PointLight_t> Parser::GetPointLight()
+{
+    std::vector<PointLight_t> pointlight;
+    const libconfig::Setting &pointlights = cfg.lookup("lights.point");
+
+    for (int i = 0; i < pointlights.getLength(); i++) {
+        PointLight_t point;
+        const libconfig::Setting &p = pointlights[i];
+        point.x = p.lookup("x");
+        point.y = p.lookup("y");
+        point.z = p.lookup("z");
+        pointlight.push_back(point);
+    }
+    return pointlight;
+}
+
+std::vector<DirectionalLight_t> Parser::GetDirectionalLight()
+{
+    std::vector<DirectionalLight_t> vd;
+    return vd;
+}
+
+Light_t Parser::GetLight()
+{
+    Light_t light;
+    const libconfig::Setting &lights = cfg.lookup("lights");
+
+    light.ambient = lights.lookup("ambient");
+    light.diffuse = lights.lookup("diffuse");
+    light.points = GetPointLight();
+    light.directionals = GetDirectionalLight();// FONCTION A VOIR CAR PAS IMPLEMENTER DANS LE FICHIER DE CONFIG
+    return light;
+}

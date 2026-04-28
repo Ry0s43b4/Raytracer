@@ -13,14 +13,15 @@ CXXFLAGS	=	-std=c++20 -Wall -Wextra -Werror -Iinclude -lconfig++
 
 SRC	=	src/main.cpp				\
 		src/math/Vector3D.cpp		\
-		src/math/Ray.cpp
+		src/math/Ray.cpp			\
+		src/Parsing/Parser.cpp
 
 OBJ	=	$(SRC:.cpp=.o)
 
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	$(CXX) -o $(NAME) $(OBJ)
+	$(CXX) -o $(NAME) $(OBJ) $(CXXFLAGS)
 
 clean:
 	rm -f $(OBJ)
