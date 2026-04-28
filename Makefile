@@ -8,7 +8,8 @@
 NAME	=	raytracer
 
 CXX	=	g++
-CXXFLAGS	=	-std=c++20 -Wall -Wextra -Werror -Iinclude
+
+CXXFLAGS	=	-std=c++20 -Wall -Wextra -Werror -Iinclude -lconfig++
 
 SRC	=	src/main.cpp				\
 		src/math/Vector3D.cpp		\
