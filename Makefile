@@ -14,7 +14,7 @@ CXXFLAGS	=	-std=c++20 -Wall -Wextra -Werror -Iinclude -lconfig++
 SRC	=	src/main.cpp				\
 		src/math/Vector3D.cpp		\
 		src/math/Ray.cpp			\
-		src/Parsing/Parser.cpp
+		src/Parsing/SceneParser.cpp
 
 OBJ	=	$(SRC:.cpp=.o)
 
