@@ -22,10 +22,30 @@ typedef struct Camera {
     double fov;
 } Camera_t;
 
+typedef struct Sphere
+{
+    int x;
+    int y;
+    int z;
+    int r;
+    int cr;
+    int cg;
+    int cb;
+} Sphere_t;
+
+typedef struct Plane
+{
+    std::string axis;
+    int position;
+    int cr;
+    int cg;
+    int cb;
+} Plane_t;
+
 typedef struct Parsing {
     Camera_t c;
-    // std::vector<Spheres_t> s;
-    // std::vector<Planes_t> p;
+    std::vector<Sphere_t> s;
+    std::vector<Plane_t> p;
 } Parsing_t;
 
 class Parser {
@@ -39,10 +59,11 @@ class Parser {
         // THIS GETTER IS FOR CAMERA
         Camera_t GetCamera();
 
-        // THIS GETTER IS FOR PRIMITIVE
-        
-        
+        // THIS GETTER IS FOR SPHERES
+        std::vector<Sphere_t> GetSphere();
 
+        // THIS GETTER IS FOR PLANES
+        std::vector<Plane_t> GetPlane();
     private:
         libconfig::Config cfg;
         std::string filepath;

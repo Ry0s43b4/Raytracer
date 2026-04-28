@@ -37,3 +37,43 @@ Camera_t Parser::GetCamera()
     camera.fov = cfg.lookup("camera.fieldOfView");
     return camera;
 }
+
+std::vector<Sphere_t> Parser::GetSphere()
+{
+    std::vector<Sphere_t> vs;
+    const libconfig::Setting &spheres = cfg.lookup("primitives.spheres");
+
+    for (int i = 0; i < spheres.getLength(); i++) {
+        const libconfig::Setting &s = spheres[i];
+        Sphere_t sphere;
+        sphere.x = s.lookup("x");
+        sphere.y = s.lookup("y");
+        sphere.z = s.lookup("z");
+        sphere.r = s.lookup("r");
+        const libconfig::Setting &color = s.lookup("color");
+        sphere.cr = color.lookup("r");
+        sphere.cg = color.lookup("g");
+        sphere.cb = color.lookup("b");
+        vs.push_back(sphere);
+    }
+    return vs;
+}
+
+std::vector<Plane_t> Parser::GetPlane()
+{
+    std::vector<Plane_t> vp;
+    const libconfig::Setting &planes = cfg.lookup("primitives.planes");
+
+    for (int i = 0; i < planes.getLength(); i++) {
+        const libconfig::Setting &p = planes[i];
+        Plane_t plane;
+        plane.axis = p.lookup("axis").c_str();
+        plane.position = p.lookup("position");
+        const libconfig::Setting &color = p.lookup("color");
+        plane.cr = color.lookup("r");
+        plane.cg = color.lookup("g");
+        plane.cb = color.lookup("b");
+        vp.push_back(plane);
+    }
+    return vp;
+}
