@@ -22,46 +22,18 @@ int Parser::ReadConfigFile()
     return 0;
 }
 
-int Parser::GetCameraResolutionWidth()
+Camera_t Parser::GetCamera()
 {
-    return cfg.lookup("camera.resolution.width");
-}
+    Camera_t camera;
 
-int Parser::GetCameraResolutionHeight()
-{
-    return cfg.lookup("camera.resolution.height");
-}
-
-int Parser::GetCameraPositionX()
-{
-    return cfg.lookup("camera.position.x");
-}
-int Parser::GetCameraPositionY()
-{
-    return cfg.lookup("camera.position.y");
-}
-
-int Parser::GetCameraPositionZ()
-{
-    return cfg.lookup("camera.position.z");
-}
-
-int Parser::GetCameraRotationX()
-{
-    return cfg.lookup("camera.rotation.x");
-}
-
-int Parser::GetCameraRotationY()
-{
-    return cfg.lookup("camera.rotation.y");
-}
-
-int Parser::GetCameraRotationZ()
-{
-    return cfg.lookup("camera.rotation.z");
-}
-
-double Parser::GetCameraFov()
-{
-    return cfg.lookup("camera.fieldOfView");
+    camera.width = cfg.lookup("camera.resolution.width");
+    camera.height = cfg.lookup("camera.resolution.height");
+    camera.px = cfg.lookup("camera.position.x");
+    camera.py = cfg.lookup("camera.position.y");
+    camera.pz = cfg.lookup("camera.position.z");
+    camera.rx = cfg.lookup("camera.rotation.x");
+    camera.ry = cfg.lookup("camera.rotation.y");
+    camera.rz = cfg.lookup("camera.rotation.z");
+    camera.fov = cfg.lookup("camera.fieldOfView");
+    return camera;
 }

@@ -8,6 +8,25 @@
 #pragma once
 #include <iostream>
 #include <libconfig.h++>
+#include <vector>
+
+typedef struct Camera {
+    int width;
+    int height;
+    int px;
+    int py;
+    int pz;
+    int rx;
+    int ry;
+    int rz;
+    double fov;
+} Camera_t;
+
+typedef struct Parsing {
+    Camera_t c;
+    // std::vector<Spheres_t> s;
+    // std::vector<Planes_t> p;
+} Parsing_t;
 
 class Parser {
     public:
@@ -18,19 +37,10 @@ class Parser {
         int ReadConfigFile();
         
         // THIS GETTER IS FOR CAMERA
-        int GetCameraResolutionWidth();
-        int GetCameraResolutionHeight();
+        Camera_t GetCamera();
+
+        // THIS GETTER IS FOR PRIMITIVE
         
-        int GetCameraPositionX();
-        int GetCameraPositionY();
-        int GetCameraPositionZ();
-
-        int GetCameraRotationX();
-        int GetCameraRotationY();
-        int GetCameraRotationZ();
-
-        double GetCameraFov();
-
         
 
     private:
