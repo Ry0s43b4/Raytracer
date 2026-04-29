@@ -16,8 +16,11 @@ SRC	=	src/main.cpp						\
 		src/Math/Ray.cpp					\
 		src/Scene/SceneParser.cpp			\
 		src/Factory/PrimitiveFactory.cpp	\
+		src/Factory/LightFactory.cpp		\
 		src/Primitive/Sphere.cpp			\
-		src/Primitive/Plane.cpp
+		src/Primitive/Plane.cpp				\
+		src/Light/AmbientLight.cpp			\
+		src/Light/DirectionalLight.cpp
 
 OBJ	=	$(SRC:.cpp=.o)
 
