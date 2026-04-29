@@ -9,7 +9,7 @@
 
 #include "Math/Vector3D.hpp"
 #include "Math/Ray.hpp"
-#include "Core/Color.hpp"
+#include "core/Color.hpp"
 
 int main(void)
 {
