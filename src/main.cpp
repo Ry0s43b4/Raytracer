@@ -6,25 +6,47 @@
 */
 
 #include <iostream>
+#include <string>
 
-#include "Math/Vector3D.hpp"
-#include "Math/Ray.hpp"
-#include "core/Color.hpp"
+#include "core/RaytracerError.hpp"
 
-int main(void)
+static void printUsage()
 {
-    Math::Vector3D origin(0, 0, 0);
-    Math::Vector3D direction(1, 0, 0);
-    RayTracer::Ray ray(origin, direction);
-    RayTracer::Color color(255, 0, 0);
+    std::cout << "USAGE: ./raytracer <SCENE_FILE>\n";
+    std::cout << "  SCENE_FILE: scene configuration\n";
+}
 
-    color.clamp();
+int main(int ac, char **av)
+{
+    try {
+        if (ac != 2) {
+            printUsage();
+            return 84;
+        }
 
-    std::cout << "Raytracer core initialized." << std::endl;
-    std::cout << "Ray origin: "
-              << ray.origin().x << " "
-              << ray.origin().y << " "
-              << ray.origin().z << std::endl;
+        std::string filepath = av[1];
+
+        if (filepath == "--help") {
+            printUsage();
+            return 0;
+        }
+
+        // TODO:
+        // SceneParser parser(filepath);
+        // Scene scene = parser.parse();
+        // Renderer renderer;
+        // Image image = renderer.render(scene);
+        // PPMWriter::save(image, "output.ppm");
+
+        std::cout << "Core initialized. Ready for rendering pipeline." << std::endl;
+
+    } catch (const RayTracer::RaytracerError &e) {
+        std::cerr << e.what() << std::endl;
+        return 84;
+    } catch (const std::exception &e) {
+        std::cerr << "Unexpected error: " << e.what() << std::endl;
+        return 84;
+    }
 
     return 0;
 }
