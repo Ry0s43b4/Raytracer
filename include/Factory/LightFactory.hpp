@@ -5,7 +5,10 @@
 ** LightFactory
 */
 
+#pragma once
+
 #include <memory>
+#include <string>
 #include "../Math/Vector3D.hpp"
 #include "../Math/Point3D.hpp"
 #include "../Light/ILight.hpp"

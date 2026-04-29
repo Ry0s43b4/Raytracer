@@ -10,7 +10,7 @@
 int SceneParser::ReadConfigFile()
 {
     try {
-        cfg.readFile(filepath);
+        cfg.readFile(filepath.c_str());
     } catch(const libconfig::FileIOException &fioex) {
         std::cerr << "I/O error while reading file." << std::endl;
         return 84;

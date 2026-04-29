@@ -8,6 +8,7 @@
 #pragma once
 #include <iostream>
 #include <libconfig.h++>
+#include <string>
 #include <vector>
 
 typedef struct Camera {
