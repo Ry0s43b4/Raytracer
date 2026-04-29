@@ -9,7 +9,7 @@
 
 #include <cmath>
 
-namespace RayTracer {
+namespace Math {
 
 class Vector3D {
 public:

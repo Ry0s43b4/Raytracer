@@ -11,10 +11,13 @@ CXX	=	g++
 
 CXXFLAGS	=	-std=c++20 -Wall -Wextra -Werror -Iinclude -lconfig++
 
-SRC	=	src/main.cpp				\
-		src/math/Vector3D.cpp		\
-		src/math/Ray.cpp			\
-		src/Parsing/SceneParser.cpp
+SRC	=	src/main.cpp						\
+		src/Math/Vector3D.cpp				\
+		src/Math/Ray.cpp					\
+		src/Scene/SceneParser.cpp			\
+		src/Factory/PrimitiveFactory.cpp	\
+		src/Primitive/Sphere.cpp			\
+		src/Primitive/Plane.cpp
 
 OBJ	=	$(SRC:.cpp=.o)
 
