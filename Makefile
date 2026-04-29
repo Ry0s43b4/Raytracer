@@ -9,25 +9,22 @@ NAME	=	raytracer
 
 CXX	=	g++
 
-CXXFLAGS	=	-std=c++20 -Wall -Wextra -Werror -Iinclude -lconfig++
+CXXFLAGS = -std=c++17 -Wall -Wextra -Werror -Iinclude -I/opt/homebrew/opt/libconfig/include
+LDFLAGS  = -L/opt/homebrew/opt/libconfig/lib -lconfig++
 
-SRC	=	src/main.cpp						\
-		src/Math/Vector3D.cpp				\
-		src/Math/Ray.cpp					\
-		src/Scene/SceneParser.cpp			\
-		src/Factory/PrimitiveFactory.cpp	\
-		src/Factory/LightFactory.cpp		\
-		src/Primitive/Sphere.cpp			\
-		src/Primitive/Plane.cpp				\
-		src/Light/AmbientLight.cpp			\
-		src/Light/DirectionalLight.cpp
+SRC_DIR	=	src
+
+SRC	=	$(shell find $(SRC_DIR) -type f -name "*.cpp")
 
 OBJ	=	$(SRC:.cpp=.o)
 
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	$(CXX) -o $(NAME) $(OBJ) $(CXXFLAGS)
+	$(CXX) -o $(NAME) $(OBJ) $(LDFLAGS)
+
+%.o: %.cpp
+	$(CXX) $(CXXFLAGS) -c $< -o $@
 
 clean:
 	rm -f $(OBJ)
