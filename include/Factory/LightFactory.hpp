@@ -1,0 +1,22 @@
+/*
+** EPITECH PROJECT, 2026
+** G-OOP-400-PAR-4-1-raytracer-22
+** File description:
+** LightFactory
+*/
+
+#include <memory>
+#include "../Math/Vector3D.hpp"
+#include "../Math/Point3D.hpp"
+#include "../Light/ILight.hpp"
+#include "../Light/AmbientLight.hpp"
+#include "../Light/DirectionalLight.hpp"
+
+class LightFactory {
+    public:
+
+        LightFactory() = default;
+        ~LightFactory() = default;
+
+        std::unique_ptr<ILight> Create(std::string type /* et ajouter les info des parametre utiliser*/);
+};
