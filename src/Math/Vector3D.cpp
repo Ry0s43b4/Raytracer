@@ -5,9 +5,9 @@
 ** Vector3D
 */
 
-#include "math/Vector3D.hpp"
+#include "Math/Vector3D.hpp"
 
-namespace RayTracer {
+namespace Math {
 
 Vector3D::Vector3D() : x(0), y(0), z(0) {}
 
