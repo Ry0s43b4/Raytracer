@@ -5,4 +5,4 @@
 ** DirectionalLight
 */
 
-#include "../../include/Light/DirectionalLight.hpp"
+#include "../../include/lights/DirectionalLight.hpp"

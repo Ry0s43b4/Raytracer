@@ -5,5 +5,4 @@
 ** Plane
 */
 
-#include "../../include/Primitive/Plane.hpp"
-
+#include "../../include/primitives/Plane.hpp"

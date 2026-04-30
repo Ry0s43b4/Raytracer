@@ -5,4 +5,4 @@
 ** Sphere
 */
 
-#include "../../include/Primitive/Sphere.hpp"
+#include "../../include/primitives/Sphere.hpp"

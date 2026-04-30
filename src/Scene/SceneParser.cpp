@@ -5,7 +5,7 @@
 ** SceneParser
 */
 
-#include "../../include/Scene/SceneParser.hpp"
+#include "../../include/scene/SceneParser.hpp"
 
 int SceneParser::ReadConfigFile()
 {

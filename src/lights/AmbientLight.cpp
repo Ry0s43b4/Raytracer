@@ -5,4 +5,4 @@
 ** AmbientLight
 */
 
-#include "../../include/Light/AmbientLight.hpp"
+#include "../../include/lights/AmbientLight.hpp"

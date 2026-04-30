@@ -8,11 +8,11 @@
 #pragma once
 #include <memory>
 #include <string>
-#include "../Math/Vector3D.hpp"
-#include "../Math/Point3D.hpp"
-#include "../Primitive/IPrimitive.hpp"
-#include "../Primitive/Sphere.hpp"
-#include "../Primitive/Plane.hpp"
+#include "../math/Vector3D.hpp"
+#include "../math/Point3D.hpp"
+#include "../primitives/IPrimitive.hpp"
+#include "../primitives/Sphere.hpp"
+#include "../primitives/Plane.hpp"
 
 class PrimitiveFactory {
     public:
