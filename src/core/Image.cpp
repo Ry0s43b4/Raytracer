@@ -5,8 +5,8 @@
 ** Image
 */
 
-#include "core/Image.hpp"
-#include "core/RaytracerError.hpp"
+#include "Core/Image.hpp"
+#include "Core/RaytracerError.hpp"
 
 namespace RayTracer {
 

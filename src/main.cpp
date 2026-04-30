@@ -8,7 +8,7 @@
 #include <iostream>
 #include <string>
 
-#include "core/RaytracerError.hpp"
+#include "Core/RaytracerError.hpp"
 
 static void printUsage()
 {

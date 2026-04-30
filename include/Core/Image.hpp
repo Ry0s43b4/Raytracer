@@ -8,7 +8,7 @@
 #pragma once
 
 #include <vector>
-#include "core/Color.hpp"
+#include "Core/Color.hpp"
 
 namespace RayTracer {
 

@@ -5,7 +5,7 @@
 ** PrimitiveFactory
 */
 
-#include "../../include/factory/PrimitiveFactory.hpp"
+#include "Factory/PrimitiveFactory.hpp"
 
 std::unique_ptr<IPrimitive> PrimitiveFactory::Create(std::string type /* et ajouter les info des parametre utiliser*/)
 {

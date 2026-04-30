@@ -5,7 +5,7 @@
 ** LightFactory
 */
 
-#include "../../include/factory/LightFactory.hpp"
+#include "Factory/LightFactory.hpp"
 
 std::unique_ptr<ILight> LightFactory::Create(std::string type /* et ajouter les info des parametre utiliser*/)
 {

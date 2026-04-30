@@ -8,7 +8,7 @@
 #pragma once
 
 #include <string>
-#include "core/Image.hpp"
+#include "Core/Image.hpp"
 
 namespace RayTracer {
 

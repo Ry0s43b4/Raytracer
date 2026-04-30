@@ -9,11 +9,11 @@
 
 #include <memory>
 #include <string>
-#include "../math/Vector3D.hpp"
-#include "../math/Point3D.hpp"
-#include "../lights/ILight.hpp"
-#include "../lights/AmbientLight.hpp"
-#include "../lights/DirectionalLight.hpp"
+#include "Math/Vector3D.hpp"
+#include "Math/Point3D.hpp"
+#include "lights/ILight.hpp"
+#include "lights/AmbientLight.hpp"
+#include "lights/DirectionalLight.hpp"
 
 class LightFactory {
     public:

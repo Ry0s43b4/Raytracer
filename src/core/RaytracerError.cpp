@@ -5,7 +5,7 @@
 ** RaytracerError
 */
 
-#include "core/RaytracerError.hpp"
+#include "Core/RaytracerError.hpp"
 
 namespace RayTracer {
 

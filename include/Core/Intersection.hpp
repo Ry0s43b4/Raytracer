@@ -7,8 +7,8 @@
 
 #pragma once
 
-#include "math/Vector3D.hpp"
-#include "core/Color.hpp"
+#include "Math/Vector3D.hpp"
+#include "Core/Color.hpp"
 
 namespace RayTracer {
 

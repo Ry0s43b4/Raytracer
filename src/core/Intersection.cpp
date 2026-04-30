@@ -5,7 +5,7 @@
 ** Intersection
 */
 
-#include "core/Intersection.hpp"
+#include "Core/Intersection.hpp"
 
 namespace RayTracer {
 

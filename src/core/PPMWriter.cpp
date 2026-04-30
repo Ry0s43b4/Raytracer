@@ -7,8 +7,8 @@
 
 #include <fstream>
 
-#include "core/PPMWriter.hpp"
-#include "core/RaytracerError.hpp"
+#include "Core/PPMWriter.hpp"
+#include "Core/RaytracerError.hpp"
 
 namespace RayTracer {
 
