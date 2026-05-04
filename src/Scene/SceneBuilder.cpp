@@ -7,13 +7,13 @@
 
 #include <memory>
 
-#include "scene/SceneBuilder.hpp"
-#include "primitives/Sphere.hpp"
-#include "primitives/Plane.hpp"
-#include "lights/AmbientLight.hpp"
-#include "lights/DirectionalLight.hpp"
-#include "math/Vector3D.hpp"
-#include "core/Color.hpp"
+#include "Scene/SceneBuilder.hpp"
+#include "Primitives/Sphere.hpp"
+#include "Primitives/Plane.hpp"
+#include "Lights/AmbientLight.hpp"
+#include "Lights/DirectionalLight.hpp"
+#include "Math/Vector3D.hpp"
+#include "Core/Color.hpp"
 
 namespace RayTracer {
 

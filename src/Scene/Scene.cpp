@@ -5,7 +5,7 @@
 ** Scene
 */
 
-#include "scene/Scene.hpp"
+#include "Scene/Scene.hpp"
 
 namespace RayTracer {
 

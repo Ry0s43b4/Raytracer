@@ -5,8 +5,8 @@
 ** SceneParser
 */
 
-#include "scene/SceneParser.hpp"
-#include "core/RaytracerError.hpp"
+#include "Scene/SceneParser.hpp"
+#include "Core/RaytracerError.hpp"
 
 namespace RayTracer {
 

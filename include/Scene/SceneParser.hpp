@@ -10,7 +10,7 @@
 #include <libconfig.h++>
 #include <string>
 
-#include "scene/SceneData.hpp"
+#include "Scene/SceneData.hpp"
 
 namespace RayTracer {
 

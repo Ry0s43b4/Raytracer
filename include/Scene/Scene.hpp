@@ -10,8 +10,8 @@
 #include <memory>
 #include <vector>
 
-#include "primitives/IPrimitive.hpp"
-#include "lights/ILight.hpp"
+#include "Primitives/IPrimitive.hpp"
+#include "Lights/ILight.hpp"
 
 namespace RayTracer {
 
