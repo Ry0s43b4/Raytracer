@@ -10,9 +10,9 @@
 #include <string>
 #include "Math/Vector3D.hpp"
 #include "Math/Point3D.hpp"
-#include "primitives/IPrimitive.hpp"
-#include "primitives/Sphere.hpp"
-#include "primitives/Plane.hpp"
+#include "Primitives/IPrimitive.hpp"
+#include "Primitives/Sphere.hpp"
+#include "Primitives/Plane.hpp"
 
 class PrimitiveFactory {
     public:
