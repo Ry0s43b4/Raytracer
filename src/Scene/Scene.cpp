@@ -9,8 +9,9 @@
 
 namespace RayTracer {
 
-Scene::Scene() : _camera()
+void Scene::setCamera(const Camera &camera)
 {
+    _camera = camera;
 }
 
 void Scene::addPrimitive(std::unique_ptr<IPrimitive> primitive)
@@ -23,9 +24,9 @@ void Scene::addLight(std::unique_ptr<ILight> light)
     _lights.push_back(std::move(light));
 }
 
-void Scene::setCamera(const Camera &camera)
+const Camera &Scene::camera() const
 {
-    _camera = camera;
+    return _camera;
 }
 
 const std::vector<std::unique_ptr<IPrimitive>> &Scene::primitives() const

@@ -8,6 +8,7 @@
 #include <memory>
 
 #include "Scene/SceneBuilder.hpp"
+#include "Core/Camera.hpp"
 #include "Primitives/Sphere.hpp"
 #include "Primitives/Plane.hpp"
 #include "Lights/AmbientLight.hpp"
@@ -22,6 +23,7 @@ Scene SceneBuilder::build(const SceneData &data)
     Scene scene;
     scene.setCamera(buildCamera(data.camera));
 
+    scene.setCamera(buildCamera(data.camera));
     addSpheres(scene, data.spheres);
     addPlanes(scene, data.planes);
     addLights(scene, data.lights);
@@ -29,14 +31,14 @@ Scene SceneBuilder::build(const SceneData &data)
     return scene;
 }
 
-Camera SceneBuilder::buildCamera(const CameraData &cameraData)
+Camera SceneBuilder::buildCamera(const CameraData &data)
 {
     return Camera(
-        cameraData.width,
-        cameraData.height,
-        Math::Vector3D(cameraData.px, cameraData.py, cameraData.pz),
-        Math::Vector3D(cameraData.rx, cameraData.ry, cameraData.rz),
-        cameraData.fov
+        Math::Vector3D(data.px, data.py, data.pz),
+        Math::Vector3D(data.rx, data.ry, data.rz),
+        data.width,
+        data.height,
+        data.fov
     );
 }
 
@@ -81,6 +83,9 @@ void SceneBuilder::addLights(Scene &scene, const LightData &lights)
             lights.diffuse
         ));
     }
+
+    // Point lights — to be implemented when PointLight class exists
+    // for (const auto &p : lights.points) { ... }
 }
 
 }
