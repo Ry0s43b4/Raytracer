@@ -1,6 +1,6 @@
 /*
 ** EPITECH PROJECT, 2026
-** G-OOP-400-PAR-4-1-raytracer-22
+** raytracer
 ** File description:
 ** AmbientLight
 */
@@ -9,7 +9,19 @@
 
 #include "Lights/ILight.hpp"
 
+namespace RayTracer {
+
 class AmbientLight : public ILight {
-    public:
-        AmbientLight() = default;
+public:
+    explicit AmbientLight(double intensity);
+
+    Color computeLight(
+        const Intersection &intersection,
+        const Math::Vector3D &viewDir
+    ) const override;
+
+private:
+    double _intensity;
 };
+
+}
