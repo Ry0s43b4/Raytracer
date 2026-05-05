@@ -8,7 +8,7 @@
 #include <memory>
 
 #include "Scene/SceneBuilder.hpp"
-#include "Core/Camera.hpp"
+#include "Scene/Camera.hpp"
 #include "Primitives/Sphere.hpp"
 #include "Primitives/Plane.hpp"
 #include "Lights/AmbientLight.hpp"
@@ -21,7 +21,6 @@ namespace RayTracer {
 Scene SceneBuilder::build(const SceneData &data)
 {
     Scene scene;
-    scene.setCamera(buildCamera(data.camera));
 
     scene.setCamera(buildCamera(data.camera));
     addSpheres(scene, data.spheres);
@@ -34,10 +33,10 @@ Scene SceneBuilder::build(const SceneData &data)
 Camera SceneBuilder::buildCamera(const CameraData &data)
 {
     return Camera(
-        Math::Vector3D(data.px, data.py, data.pz),
-        Math::Vector3D(data.rx, data.ry, data.rz),
         data.width,
         data.height,
+        Math::Vector3D(data.px, data.py, data.pz),
+        Math::Vector3D(data.rx, data.ry, data.rz),
         data.fov
     );
 }

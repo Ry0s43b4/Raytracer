@@ -7,9 +7,9 @@
 
 #pragma once
 
-#include "Scene.hpp"
-#include "SceneData.hpp"
-#include "Camera.hpp"
+#include "Scene/Scene.hpp"
+#include "Scene/SceneData.hpp"
+#include "Scene/Camera.hpp"
 
 namespace RayTracer {
 
