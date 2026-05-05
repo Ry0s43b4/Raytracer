@@ -1,6 +1,6 @@
 /*
 ** EPITECH PROJECT, 2026
-** G-OOP-400-PAR-4-1-raytracer-22
+** raytracer
 ** File description:
 ** DirectionalLight
 */
@@ -9,7 +9,20 @@
 
 #include "Lights/ILight.hpp"
 
+namespace RayTracer {
+
 class DirectionalLight : public ILight {
-    public:
-        DirectionalLight() = default;
+public:
+    DirectionalLight(const Math::Vector3D &direction, double intensity);
+
+    Color computeLight(
+        const Intersection &intersection,
+        const Math::Vector3D &viewDir
+    ) const override;
+
+private:
+    Math::Vector3D _direction;
+    double _intensity;
 };
+
+}
