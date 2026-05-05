@@ -9,6 +9,10 @@
 #include <string>
 
 #include "Core/RaytracerError.hpp"
+#include "Core/Renderer.hpp"
+#include "Core/PPMWriter.hpp"
+#include "Scene/SceneParser.hpp"
+#include "Scene/SceneBuilder.hpp"
 
 static void printUsage()
 {
@@ -31,14 +35,18 @@ int main(int ac, char **av)
             return 0;
         }
 
-        // TODO:
-        // SceneParser parser(filepath);
-        // Scene scene = parser.parse();
-        // Renderer renderer;
-        // Image image = renderer.render(scene);
-        // PPMWriter::save(image, "output.ppm");
+        RayTracer::SceneParser parser(filepath);
+        RayTracer::SceneData data = parser.parse();
 
-        std::cout << "Core initialized. Ready for rendering pipeline." << std::endl;
+        RayTracer::SceneBuilder builder;
+        RayTracer::Scene scene = builder.build(data);
+
+        RayTracer::Renderer renderer;
+        RayTracer::Image image = renderer.render(scene);
+
+        RayTracer::PPMWriter::save(image, "output.ppm");
+
+        std::cout << "Rendered successfully to output.ppm" << std::endl;
 
     } catch (const RayTracer::RaytracerError &e) {
         std::cerr << e.what() << std::endl;
