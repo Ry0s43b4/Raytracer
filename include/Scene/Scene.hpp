@@ -10,7 +10,7 @@
 #include <memory>
 #include <vector>
 
-#include "Camera.hpp"
+#include "Scene/Camera.hpp"
 #include "Primitives/IPrimitive.hpp"
 #include "Lights/ILight.hpp"
 
@@ -27,7 +27,7 @@ public:
     const std::vector<std::unique_ptr<ILight>> &lights() const;
 
 private:
-    Camera _camera{{0,0,0}, {0,0,0}, 800, 600, 60.0};
+    Camera _camera;
     std::vector<std::unique_ptr<IPrimitive>> _primitives;
     std::vector<std::unique_ptr<ILight>> _lights;
 };
