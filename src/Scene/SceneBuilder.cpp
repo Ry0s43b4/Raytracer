@@ -20,12 +20,24 @@ namespace RayTracer {
 Scene SceneBuilder::build(const SceneData &data)
 {
     Scene scene;
+    scene.setCamera(buildCamera(data.camera));
 
     addSpheres(scene, data.spheres);
     addPlanes(scene, data.planes);
     addLights(scene, data.lights);
 
     return scene;
+}
+
+Camera SceneBuilder::buildCamera(const CameraData &cameraData)
+{
+    return Camera(
+        cameraData.width,
+        cameraData.height,
+        Math::Vector3D(cameraData.px, cameraData.py, cameraData.pz),
+        Math::Vector3D(cameraData.rx, cameraData.ry, cameraData.rz),
+        cameraData.fov
+    );
 }
 
 void SceneBuilder::addSpheres(Scene &scene, const std::vector<SphereData> &spheres)

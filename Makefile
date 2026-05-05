@@ -18,9 +18,14 @@ CRITERION_LIBS = $(shell pkg-config --libs criterion)
 SRC_DIR	=	src
 
 SRC	=	$(shell find $(SRC_DIR) -type f -name "*.cpp")
-TEST_SRC = tests/scene_parser_test.cpp \
+TEST_FILES = tests/scene_parser_test.cpp \
 	   tests/scene_test.cpp \
+	   tests/camera_test.cpp
+TEST_SRC = $(TEST_FILES) \
 	   src/Scene/Scene.cpp \
+	   src/Scene/Camera.cpp \
+	   src/Math/Ray.cpp \
+	   src/Math/Vector3D.cpp \
 	   src/Scene/SceneParser.cpp \
 	   src/Core/RaytracerError.cpp
 

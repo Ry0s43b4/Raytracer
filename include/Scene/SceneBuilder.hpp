@@ -17,6 +17,7 @@ public:
     Scene build(const SceneData &data);
 
 private:
+    Camera buildCamera(const CameraData &cameraData);
     void addSpheres(Scene &scene, const std::vector<SphereData> &spheres);
     void addPlanes(Scene &scene, const std::vector<PlaneData> &planes);
     void addLights(Scene &scene, const LightData &lights);
