@@ -1,13 +1,26 @@
 /*
 ** EPITECH PROJECT, 2026
-** G-OOP-400-PAR-4-1-raytracer-22
+** raytracer
 ** File description:
 ** ILight
 */
 
 #pragma once
 
+#include "Math/Vector3D.hpp"
+#include "Core/Color.hpp"
+#include "Core/Intersection.hpp"
+
+namespace RayTracer {
+
 class ILight {
-    public:
-        virtual ~ILight() = default;
+public:
+    virtual ~ILight() = default;
+
+    virtual Color computeLight(
+        const Intersection &intersection,
+        const Math::Vector3D &viewDir
+    ) const = 0;
 };
+
+}
