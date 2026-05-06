@@ -6,6 +6,7 @@
 */
 
 #include "Factory/LightFactory.hpp"
+#include "Core/RaytracerError.hpp"
 
 std::unique_ptr<RayTracer::ILight> LightFactory::Create(std::string type, double intensity, Math::Vector3D direction)
 {
@@ -15,4 +16,5 @@ std::unique_ptr<RayTracer::ILight> LightFactory::Create(std::string type, double
     if (type == "directional") {
         return std::make_unique<RayTracer::DirectionalLight>(direction, intensity);
     }
+    throw RayTracer::RaytracerError("LightFactory: unknow type: " + type + "\n");
 }
