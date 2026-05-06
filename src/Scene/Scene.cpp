@@ -39,9 +39,4 @@ const std::vector<std::unique_ptr<ILight>> &Scene::lights() const
     return _lights;
 }
 
-const Camera &Scene::camera() const
-{
-    return _camera;
-}
-
 }
