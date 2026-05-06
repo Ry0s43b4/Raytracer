@@ -20,5 +20,5 @@ class PrimitiveFactory {
         PrimitiveFactory() = default;
         ~PrimitiveFactory() = default;
 
-        std::unique_ptr<IPrimitive> Create(std::string type /* et ajouter les info des parametre utiliser*/);
+        std::unique_ptr<IPrimitive> Create(std::string type, Math::Point3D center, double radius, RayTracer::Color color);
 };

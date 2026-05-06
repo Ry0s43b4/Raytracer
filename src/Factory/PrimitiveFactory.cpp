@@ -7,10 +7,10 @@
 
 #include "Factory/PrimitiveFactory.hpp"
 
-std::unique_ptr<IPrimitive> PrimitiveFactory::Create(std::string type /* et ajouter les info des parametre utiliser*/)
+std::unique_ptr<IPrimitive> PrimitiveFactory::Create(std::string type, Math::Point3D center, double radius, RayTracer::Color color)
 {
     if (type == "sphere") {
-            return std::make_unique<Sphere>(/* AJOUTER LES INFO POUR CREE LA SPHERE*/);
+            return std::make_unique<Sphere>(center, radius, color);
         }
     if (type == "plane") {
         return std::make_unique<Plane>(/* AJOUTER LES INFO POUR CREE LE PLAN*/);
