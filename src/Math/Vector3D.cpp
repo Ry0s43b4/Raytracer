@@ -6,7 +6,7 @@
 */
 
 #include "Math/Vector3D.hpp"
-
+#include "Math/Point3D.hpp"
 namespace Math {
 
 Vector3D::Vector3D() : x(0), y(0), z(0) {}
@@ -52,4 +52,8 @@ Vector3D Vector3D::operator/(double scalar) const
     return Vector3D(x / scalar, y / scalar, z / scalar);
 }
 
+Vector3D Vector3D::operator-(const Point3D &other) const
+{
+    return Vector3D(x - other.x, y - other.y, z - other.z);
+}
 }
