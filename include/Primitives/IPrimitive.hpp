@@ -6,12 +6,17 @@
 */
 
 #pragma once
+
 #include "Core/Intersection.hpp"
 #include "Math/Ray.hpp"
 #include "Core/Color.hpp"
 
+namespace RayTracer {
+
 class IPrimitive {
-    public:
-        virtual ~IPrimitive() = default;
-        virtual RayTracer::Intersection intersect(RayTracer::Ray r) = 0;
+public:
+    virtual ~IPrimitive() = default;
+    virtual Intersection intersect(const Ray &ray) const = 0;
 };
+
+}
