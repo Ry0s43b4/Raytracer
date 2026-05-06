@@ -7,7 +7,7 @@
 
 #include "Primitives/Sphere.hpp"
 
-RayTracer::Intersection Sphere::Intersect(RayTracer::Ray r, RayTracer::Intersection intersection)
+RayTracer::Intersection Sphere::Intersect(RayTracer::Ray r)
 {
     RayTracer::Intersection intersection;
     Math::Vector3D oc = r.origin() - center;

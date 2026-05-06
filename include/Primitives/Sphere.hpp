@@ -14,7 +14,7 @@ class Sphere : public IPrimitive {
     public:
         Sphere() = default;
         Sphere(Math::Point3D center, double radius, RayTracer::Color color) : center(center), radius(radius), color(color) {}
-        RayTracer::Intersection Intersect(RayTracer::Ray r, RayTracer::Intersection intersection) override;
+        RayTracer::Intersection Intersect(RayTracer::Ray r) override;
     private:
         Math::Point3D center;
         double radius;
