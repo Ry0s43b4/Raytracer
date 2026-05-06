@@ -7,13 +7,13 @@
 
 #include "Factory/LightFactory.hpp"
 
-std::unique_ptr<ILight> LightFactory::Create(std::string type /* et ajouter les info des parametre utiliser*/)
+std::unique_ptr<ILight> LightFactory::Create(std::string type, double intensity, Math::Vector3D direction)
 {
     if (type == "ambient") {
-            return std::make_unique<AmbientLight>(/* AJOUTER LES INFO POUR CREE LA SPHERE*/);
+            return std::make_unique<AmbientLight>(intensity);
         }
     if (type == "directional") {
-        return std::make_unique<DirectionalLight>(/* AJOUTER LES INFO POUR CREE LE PLAN*/);
+        return std::make_unique<DirectionalLight>(intensity, direction);
     }
     return nullptr;
 }
