@@ -5,22 +5,39 @@
 ** Plane
 */
 
+#include <cmath>
 #include "Primitives/Plane.hpp"
 
-RayTracer::Intersection Plane::intersect(RayTracer::Ray r)
+namespace RayTracer {
+
+Plane::Plane(
+    const Math::Vector3D &point,
+    const Math::Vector3D &normal,
+    const Color &color
+)
+    : _point(point), _normal(normal.normalized()), _color(color)
+{
+}
+
+Intersection Plane::intersect(const Ray &ray) const
 {
     double denom;
     double distance;
     Math::Vector3D p0l0;
 
-    denom = normal.dot(r.direction());
-    if (std::abs(denom) < 0.0001f)
-        return RayTracer::Intersection();
-    p0l0 = point - r.origin();
-    distance = p0l0.dot(normal) / denom;
+    denom = _normal.dot(ray.direction());
+    if (std::abs(denom) < 1e-6)
+        return Intersection();
 
-    if (distance < 0.001f)
-        return RayTracer::Intersection();
-    return RayTracer::Intersection(true, distance, r.at(distance), normal, color);
+    p0l0 = _point - ray.origin();
+    distance = p0l0.dot(_normal) / denom;
+
+    if (distance < 0.001)
+        return Intersection();
+
+    Math::Vector3D normal = (denom < 0) ? _normal : _normal * -1.0;
+
+    return Intersection(true, distance, ray.at(distance), normal, _color);
+}
 
 }
