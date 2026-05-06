@@ -15,7 +15,7 @@ class Plane : public IPrimitive {
     public:
         Plane() = default;
         Plane(Math::Point3D point, Math::Vector3D normal) : point(point), normal(normal) {}
-        RayTracer::Intersection Intersect(RayTracer::Ray r) override;
+        RayTracer::Intersection intersect(RayTracer::Ray r) override;
 
     private:
         Math::Point3D point;
