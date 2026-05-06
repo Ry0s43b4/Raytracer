@@ -28,6 +28,7 @@ public:
     Vector3D operator-(const Vector3D &other) const;
     Vector3D operator*(double scalar) const;
     Vector3D operator/(double scalar) const;
+    Vector3D Vector3D::operator-(const Point3D &other) const;
 };
 
 }
