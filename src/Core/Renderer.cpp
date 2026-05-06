@@ -39,7 +39,7 @@ Intersection Renderer::castRay(const RayTracer::Ray &ray, const Scene &scene) co
     double minDistance = std::numeric_limits<double>::infinity();
 
     for (const auto &primitive : scene.primitives()) {
-        Intersection hit = primitive->intersect(ray);
+        Intersection hit = primitive->Intersect(ray);
 
         if (hit.hasHit() && hit.distance() < minDistance) {
             minDistance = hit.distance();

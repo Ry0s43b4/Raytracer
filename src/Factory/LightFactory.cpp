@@ -7,13 +7,12 @@
 
 #include "Factory/LightFactory.hpp"
 
-std::unique_ptr<ILight> LightFactory::Create(std::string type, double intensity, Math::Vector3D direction)
+std::unique_ptr<RayTracer::ILight> LightFactory::Create(std::string type, double intensity, Math::Vector3D direction)
 {
     if (type == "ambient") {
-            return std::make_unique<AmbientLight>(intensity);
+            return std::make_unique<RayTracer::AmbientLight>(intensity);
         }
     if (type == "directional") {
-        return std::make_unique<DirectionalLight>(intensity, direction);
+        return std::make_unique<RayTracer::DirectionalLight>(direction, intensity);
     }
-    return nullptr;
 }

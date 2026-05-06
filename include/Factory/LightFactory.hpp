@@ -21,5 +21,5 @@ class LightFactory {
         LightFactory() = default;
         ~LightFactory() = default;
 
-        std::unique_ptr<ILight> Create(std::string type, double intensity, Math::Vector3D direction);
+        std::unique_ptr<RayTracer::ILight> Create(std::string type, double intensity, Math::Vector3D direction);
 };

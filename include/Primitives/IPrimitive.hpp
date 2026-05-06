@@ -13,5 +13,5 @@
 class IPrimitive {
     public:
         virtual ~IPrimitive() = default;
-        virtual RayTracer::Intersection Intersect(RayTracer::Ray r, RayTracer::Intersection intersection) = 0;
+        virtual RayTracer::Intersection Intersect(RayTracer::Ray r) = 0;
 };

@@ -7,7 +7,7 @@
 
 #include "Primitives/Plane.hpp"
 
-RayTracer::Intersection Plane::Intersect(RayTracer::Ray r, RayTracer::Intersection intersection)
+RayTracer::Intersection Plane::Intersect(RayTracer::Ray r)
 {
     double denom;
     double distance;
