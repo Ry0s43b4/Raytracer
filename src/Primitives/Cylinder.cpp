@@ -22,6 +22,8 @@ namespace RayTracer {
     
     Intersection Cylinder::intersect(const Ray &ray) const
     {
-        
+        double a = ray.direction().dot(ray.direction()) - (ray.direction().dot(_cylinderAxis))^2;
+        double b = ray.direction().dot(_center.x) - (ray.direction().dot(_cylinderAxis) * _center.dot(_cylinderAxis));
+        double c = _center.dot(_center) - _center.dot(_cylinderAxis)^2 - _radius * _radius;
     }
 }
