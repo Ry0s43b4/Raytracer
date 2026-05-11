@@ -1,6 +1,6 @@
 /*
 ** EPITECH PROJECT, 2026
-** G-OOP-400-PAR-4-1-raytracer-22
+** raytracer
 ** File description:
 ** Plane
 */
@@ -11,33 +11,32 @@
 namespace RayTracer {
 
 Plane::Plane(
-    const Math::Vector3D &point,
     const Math::Vector3D &normal,
+    double position,
     const Color &color
 )
-    : _point(point), _normal(normal.normalized()), _color(color)
+    : _normal(normal.normalized()), _position(position), _color(color)
 {
 }
 
 Intersection Plane::intersect(const Ray &ray) const
 {
-    double denom;
-    double distance;
-    Math::Vector3D p0l0;
+    double denom = _normal.dot(ray.direction());
+    double t;
+    Math::Vector3D point;
+    Math::Vector3D normal;
 
-    denom = _normal.dot(ray.direction());
-    if (std::abs(denom) < 1e-6)
+    if (std::fabs(denom) < 1e-6)
         return Intersection();
 
-    p0l0 = _point - ray.origin();
-    distance = p0l0.dot(_normal) / denom;
+    t = (_position - _normal.dot(ray.origin())) / denom;
 
-    if (distance < 0.001)
+    if (t < 0.001)
         return Intersection();
 
-    Math::Vector3D normal = (denom < 0) ? _normal : _normal * -1.0;
-
-    return Intersection(true, distance, ray.at(distance), normal, _color);
+    point = ray.at(t);
+    normal = (denom < 0) ? _normal : _normal * -1.0;
+    return Intersection(true, t, point, normal, _color);
 }
 
 }
