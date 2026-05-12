@@ -14,20 +14,18 @@ namespace RayTracer {
 class Cylinder : public IPrimitive {
 public:
     Cylinder(
-        const Math::Vector3D &center,
+        const Math::Point3D &center,
         const Math::Vector3D &cylinderAxis,
         double radius,
-        double maximum,
         const Color &color
     );
 
     Intersection intersect(const Ray &ray) const override;
 
 private:
-    Math::Vector3D _center;
+    Math::Point3D _center;
     Math::Vector3D _cylinderAxis;
     double _radius;
-    double _maximum;
     Color _color;
 };
 

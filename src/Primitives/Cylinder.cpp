@@ -10,13 +10,12 @@
 namespace RayTracer {
 
     Cylinder::Cylinder(
-        const Math::Vector3D &center,
+        const Math::Point3D &center,
         const Math::Vector3D &cylinderAxis,
         double radius,
-        double maximum,
         const Color &color
     )
-    : _center(center), _cylinderAxis(cylinderAxis), _radius(radius), _maximum(maximum), _color(color)
+    : _center(center), _cylinderAxis(cylinderAxis), _radius(radius), _color(color)
     {
     }
     

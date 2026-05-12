@@ -29,6 +29,7 @@ private:
     CameraData parseCamera() const;
     std::vector<SphereData> parseSpheres() const;
     std::vector<PlaneData> parsePlanes() const;
+    std::vector<CylinderData> parseCylinders() const;
     LightData parseLights() const;
 
     std::vector<PointLightData> parsePointLights() const;

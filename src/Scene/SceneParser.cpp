@@ -116,6 +116,32 @@ std::vector<PlaneData> SceneParser::parsePlanes() const
     return planes;
 }
 
+std::vector<CylinderData> SceneParser::parseCylinders() const
+{
+    std::vector<CylinderData> cylinders;
+
+    if (!_config.exists("primitives.cylinders"))
+        return cylinders;
+
+    const libconfig::Setting &settings = _config.lookup("primitives.cylinders");
+
+    for (int i = 0; i < settings.getLength(); ++i) {
+        const libconfig::Setting &c = settings[i];
+
+        CylinderData cylinder;
+        cylinder.x = c.lookup("x");
+        cylinder.y = c.lookup("y");
+        cylinder.z = c.lookup("z");
+        cylinder.axis = static_cast<const char *>(c.lookup("axis"));
+        cylinder.radius = c.lookup("r");
+        cylinder.color = parseColor(c.lookup("color"));
+
+        cylinders.push_back(cylinder);
+    }
+
+    return cylinders;
+}
+
 LightData SceneParser::parseLights() const
 {
     LightData lights;

@@ -44,6 +44,15 @@ struct PlaneData {
     ColorData color;
 };
 
+struct CylinderData {
+    double x;
+    double y;
+    double z;
+    std::string axis;
+    double radius;
+    ColorData color;
+};
+
 struct DirectionalLightData {
     double x;
     double y;
