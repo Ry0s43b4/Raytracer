@@ -76,6 +76,7 @@ struct SceneData {
     CameraData camera;
     std::vector<SphereData> spheres;
     std::vector<PlaneData> planes;
+    std::vector<CylinderData> cylinders;
     LightData lights;
 };
 

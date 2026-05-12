@@ -25,6 +25,7 @@ SceneData SceneParser::parse()
     data.spheres = parseSpheres();
     data.planes = parsePlanes();
     data.lights = parseLights();
+    data.cylinders = parseCylinders();
 
     return data;
 }

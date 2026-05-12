@@ -27,7 +27,7 @@ Scene SceneBuilder::build(const SceneData &data)
     addSpheres(scene, data.spheres);
     addPlanes(scene, data.planes);
     addLights(scene, data.lights);
-
+    addCylinders(scene, data.cylinders);
     return scene;
 }
 
@@ -86,7 +86,7 @@ void SceneBuilder::addCylinders(Scene &scene, const std::vector<CylinderData> &c
             normal = Math::Vector3D(0, 0, 1);
 
         scene.addPrimitive(std::make_unique<Cylinder>(
-            Math::Point3D(p.x, p.y, p.z),
+            Math::Vector3D(p.x, p.y, p.z),
             normal,
             p.radius,
             Color(p.color.r, p.color.g, p.color.b)
