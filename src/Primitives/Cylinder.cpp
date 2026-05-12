@@ -31,7 +31,7 @@ namespace RayTracer {
         if (discriminant < 0)
             return Intersection();
 
-            double distance = (-b - std::sqrt(discriminant)) / (2.0 * a);
+        double distance = (-b - std::sqrt(discriminant)) / (2.0 * a);
         if (distance <= 0.001) {
             distance = (-b + std::sqrt(discriminant)) / (2.0 * a);
             if (distance <= 0.001)
