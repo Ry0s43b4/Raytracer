@@ -10,7 +10,7 @@
 namespace RayTracer {
 
     Cylinder::Cylinder(
-        const Math::Point3D &center,
+        const Math::Vector3D &center,
         const Math::Vector3D &cylinderAxis,
         double radius,
         const Color &color

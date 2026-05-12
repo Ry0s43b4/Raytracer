@@ -15,6 +15,7 @@
 #include "Primitives/Plane.hpp"
 #include "Math/Vector3D.hpp"
 #include "Core/Color.hpp"
+#include "Primitives/Cylinder.hpp"
 
 namespace RayTracer {
 
@@ -26,9 +27,11 @@ public:
     std::unique_ptr<IPrimitive> Create(
         const std::string &type,
         const Math::Vector3D &vectorParam,
+        const Math::Vector3D &vectorAxis,
         double scalarParam,
         const Color &color
     );
+    
 };
 
 }
