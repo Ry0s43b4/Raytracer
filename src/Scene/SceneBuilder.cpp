@@ -11,6 +11,7 @@
 #include "Scene/Camera.hpp"
 #include "Primitives/Sphere.hpp"
 #include "Primitives/Plane.hpp"
+#include "Primitives/Cylinder.hpp"
 #include "Lights/AmbientLight.hpp"
 #include "Lights/DirectionalLight.hpp"
 #include "Math/Vector3D.hpp"
@@ -67,6 +68,27 @@ void SceneBuilder::addPlanes(Scene &scene, const std::vector<PlaneData> &planes)
         scene.addPrimitive(std::make_unique<Plane>(
             normal,
             p.position,
+            Color(p.color.r, p.color.g, p.color.b)
+        ));
+    }
+}
+
+void SceneBuilder::addCylinders(Scene &scene, const std::vector<CylinderData> &cylinders)
+{
+    for (const auto &p : cylinders) {
+        Math::Vector3D normal;
+
+        if (p.axis == "X")
+            normal = Math::Vector3D(1, 0, 0);
+        else if (p.axis == "Y")
+            normal = Math::Vector3D(0, 1, 0);
+        else
+            normal = Math::Vector3D(0, 0, 1);
+
+        scene.addPrimitive(std::make_unique<Cylinder>(
+            Math::Vector3D(p.x, p.y, p.z),
+            normal,
+            p.radius,
             Color(p.color.r, p.color.g, p.color.b)
         ));
     }
