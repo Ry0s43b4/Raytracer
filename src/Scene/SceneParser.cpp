@@ -26,6 +26,7 @@ SceneData SceneParser::parse()
     data.planes = parsePlanes();
     data.lights = parseLights();
     data.cylinders = parseCylinders();
+    data.cones = parseCones();
 
     return data;
 }
@@ -141,6 +142,32 @@ std::vector<CylinderData> SceneParser::parseCylinders() const
     }
 
     return cylinders;
+}
+
+std::vector<ConeData> SceneParser::parseCones() const
+{
+    std::vector<ConeData> cones;
+
+    if (!_config.exists("primitives.cones"))
+        return cones;
+
+    const libconfig::Setting &settings = _config.lookup("primitives.cones");
+
+    for (int i = 0; i < settings.getLength(); ++i) {
+        const libconfig::Setting &c = settings[i];
+
+        ConeData cone;
+        cone.x = c.lookup("x");
+        cone.y = c.lookup("y");
+        cone.z = c.lookup("z");
+        cone.axis = static_cast<const char *>(c.lookup("axis"));
+        cone.radius = c.lookup("r");
+        cone.color = parseColor(c.lookup("color"));
+
+        cones.push_back(cone);
+    }
+
+    return cones;
 }
 
 LightData SceneParser::parseLights() const
