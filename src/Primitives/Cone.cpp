@@ -32,5 +32,17 @@ namespace RayTracer {
         double discriminant = b * b - 4 * a * c;
         if (discriminant < 0)
             return Intersection();
+        
+        double distance = (-b - std::sqrt(discriminant)) / (2.0 * a);
+        if (distance <= 0.001) {
+            distance = (-b + std::sqrt(discriminant)) / (2.0 * a);
+            if (distance <= 0.001)
+                return Intersection();
+        }
+        
+        Math::Vector3D point  = ray.at(distance);
+        Math::Vector3D normal = (point - _vertex).normalized();
+
+        return Intersection(true, distance, point, normal, _color);
     }
 }
