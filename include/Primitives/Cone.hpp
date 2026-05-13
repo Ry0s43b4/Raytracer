@@ -12,7 +12,7 @@
 namespace RayTracer {
     class Cone : public IPrimitive {
         public:
-        Cone::Cone(
+        Cone(
             const Math::Vector3D &vertex,
             const Math::Vector3D &axis,
             double tangent,

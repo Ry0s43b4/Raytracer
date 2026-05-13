@@ -12,6 +12,7 @@
 #include "Primitives/Sphere.hpp"
 #include "Primitives/Plane.hpp"
 #include "Primitives/Cylinder.hpp"
+#include "Primitives/Cone.hpp"
 #include "Lights/AmbientLight.hpp"
 #include "Lights/DirectionalLight.hpp"
 #include "Math/Vector3D.hpp"
@@ -28,6 +29,7 @@ Scene SceneBuilder::build(const SceneData &data)
     addPlanes(scene, data.planes);
     addLights(scene, data.lights);
     addCylinders(scene, data.cylinders);
+    addCones(scene, data.cones);
     return scene;
 }
 
@@ -89,6 +91,29 @@ void SceneBuilder::addCylinders(Scene &scene, const std::vector<CylinderData> &c
             Math::Vector3D(p.x, p.y, p.z),
             normal,
             p.radius,
+            Color(p.color.r, p.color.g, p.color.b)
+        ));
+    }
+}
+
+void SceneBuilder::addCones(Scene &scene, const std::vector<ConeData> &cones)
+{
+    for (const auto &p : cones) {
+        Math::Vector3D normal;
+
+        if (p.axis == "X")
+            normal = Math::Vector3D(1, 0, 0);
+        else if (p.axis == "Y")
+            normal = Math::Vector3D(0, 1, 0);
+        else
+            normal = Math::Vector3D(0, 0, 1);
+
+        scene.addPrimitive(std::make_unique<Cone>(
+            Math::Vector3D(p.x, p.y, p.z),
+            normal,
+            p.radius,
+            0.0, // a changer
+            2.0,// a changer
             Color(p.color.r, p.color.g, p.color.b)
         ));
     }
