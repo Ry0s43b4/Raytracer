@@ -61,7 +61,7 @@ Color Renderer::computeColor(
     Color finalColor;
 
     for (const auto &light : scene.lights()) {
-        Color c = light->computeLight(intersection, viewDir);
+        Color c = light->computeLight(intersection, viewDir, scene.primitives());
         finalColor.r += c.r;
         finalColor.g += c.g;
         finalColor.b += c.b;
