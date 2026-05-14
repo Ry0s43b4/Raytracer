@@ -5,6 +5,8 @@
 ** Cylinder
 */
 
+#pragma once
+
 #include "Primitives/IPrimitive.hpp"
 #include "Math/Vector3D.hpp"
 #include "Core/Color.hpp"

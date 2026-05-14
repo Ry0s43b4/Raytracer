@@ -8,6 +8,7 @@
 #include <cmath>
 
 #include "Scene/Camera.hpp"
+#include "Transformation/Rotation.hpp"
 
 namespace {
 constexpr double PI = 3.14159265358979323846;
@@ -87,29 +88,7 @@ Ray Camera::generateRay(int x, int y) const
 
 Math::Vector3D Camera::rotateDirection(const Math::Vector3D &direction) const
 {
-    const double rx = toRadians(_rotation.x);
-    const double ry = toRadians(_rotation.y);
-    const double rz = toRadians(_rotation.z);
-
-    Math::Vector3D rotated = direction;
-
-    rotated = Math::Vector3D(
-        rotated.x,
-        rotated.y * std::cos(rx) - rotated.z * std::sin(rx),
-        rotated.y * std::sin(rx) + rotated.z * std::cos(rx)
-    );
-    rotated = Math::Vector3D(
-        rotated.x * std::cos(ry) + rotated.z * std::sin(ry),
-        rotated.y,
-        -rotated.x * std::sin(ry) + rotated.z * std::cos(ry)
-    );
-    rotated = Math::Vector3D(
-        rotated.x * std::cos(rz) - rotated.y * std::sin(rz),
-        rotated.x * std::sin(rz) + rotated.y * std::cos(rz),
-        rotated.z
-    );
-
-    return rotated.normalized();
+    return Rotation::rotateForward(direction, _rotation).normalized();
 }
 
 }

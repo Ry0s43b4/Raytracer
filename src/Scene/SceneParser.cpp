@@ -87,6 +87,7 @@ std::vector<SphereData> SceneParser::parseSpheres() const
         sphere.z = s.lookup("z");
         sphere.radius = s.lookup("r");
         sphere.color = parseColor(s.lookup("color"));
+        sphere.transform = parseTransformIfAny(s);
 
         spheres.push_back(sphere);
     }
@@ -136,6 +137,7 @@ std::vector<CylinderData> SceneParser::parseCylinders() const
         cylinder.axis = static_cast<const char *>(c.lookup("axis"));
         cylinder.radius = c.lookup("r");
         cylinder.color = parseColor(c.lookup("color"));
+        cylinder.transform = parseTransformIfAny(c);
 
         cylinders.push_back(cylinder);
     }
@@ -214,6 +216,39 @@ ColorData SceneParser::parseColor(const libconfig::Setting &setting) const
     color.b = setting.lookup("b");
 
     return color;
+}
+
+TransformData SceneParser::parseTransformIfAny(const libconfig::Setting &setting) const
+{
+    TransformData out;
+
+    if (!setting.exists("transform"))
+        return out;
+
+    out.enabled = true;
+
+    try {
+        const libconfig::Setting &tf = setting.lookup("transform");
+
+        if (tf.exists("translation")) {
+            const libconfig::Setting &tr = tf.lookup("translation");
+
+            out.tx = tr.lookup("x");
+            out.ty = tr.lookup("y");
+            out.tz = tr.lookup("z");
+        }
+        if (tf.exists("rotation")) {
+            const libconfig::Setting &rr = tf.lookup("rotation");
+
+            out.rx = rr.lookup("x");
+            out.ry = rr.lookup("y");
+            out.rz = rr.lookup("z");
+        }
+    } catch (const libconfig::SettingException &e) {
+        throw RaytracerError("Invalid or missing transform field: " + std::string(e.getPath()));
+    }
+
+    return out;
 }
 
 }

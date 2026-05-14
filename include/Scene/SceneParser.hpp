@@ -36,6 +36,7 @@ private:
     std::vector<DirectionalLightData> parseDirectionalLights() const;
 
     ColorData parseColor(const libconfig::Setting &setting) const;
+    TransformData parseTransformIfAny(const libconfig::Setting &setting) const;
 };
 
 }

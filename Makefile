@@ -24,10 +24,12 @@ TEST_FILES = tests/scene_parser_test.cpp \
 TEST_SRC = $(TEST_FILES) \
 	   src/Scene/Scene.cpp \
 	   src/Scene/Camera.cpp \
+	   src/Transformation/Rotation.cpp \
 	   src/Math/Ray.cpp \
 	   src/Math/Vector3D.cpp \
 	   src/Scene/SceneParser.cpp \
-	   src/Core/RaytracerError.cpp
+	   src/Core/RaytracerError.cpp \
+	   src/Core/Intersection.cpp
 
 OBJ	=	$(SRC:.cpp=.o)
 TEST_OBJ = $(TEST_SRC:.cpp=.o)
