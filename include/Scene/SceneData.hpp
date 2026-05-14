@@ -59,6 +59,8 @@ struct ConeData {
     double z;
     std::string axis;
     double radius;
+    double minimum;
+    double maximum;
     ColorData color;
 };
 

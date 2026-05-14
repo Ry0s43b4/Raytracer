@@ -162,6 +162,8 @@ std::vector<ConeData> SceneParser::parseCones() const
         cone.z = c.lookup("z");
         cone.axis = static_cast<const char *>(c.lookup("axis"));
         cone.radius = c.lookup("r");
+        cone.maximum = c.lookup("max");
+        cone.minimum = c.lookup("min");
         cone.color = parseColor(c.lookup("color"));
 
         cones.push_back(cone);

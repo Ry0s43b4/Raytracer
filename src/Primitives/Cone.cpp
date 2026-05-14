@@ -17,7 +17,7 @@ namespace RayTracer {
         double minimum,
         const Color &color
     )
-    : _vertex(vertex), _axis(axis), _tangent(tangent), _maximum(maximum), _minimum(minimum), _color(color)
+    : _vertex(vertex), _axis(axis.normalized()), _tangent(tangent), _maximum(maximum), _minimum(minimum), _color(color)
     {
     }
     
@@ -26,7 +26,7 @@ namespace RayTracer {
         Math::Vector3D x = ray.origin() - _vertex;
 
         double a = ray.direction().dot(ray.direction()) - (1 + _tangent * _tangent) * ray.direction().dot(_axis) * ray.direction().dot(_axis);
-        double b = 2 * ray.direction().dot(x) - (1 + _tangent * _tangent) * ray.direction().dot(_axis) * x.dot(_axis);
+        double b = 2 * (ray.direction().dot(x) - (1 + _tangent * _tangent) * ray.direction().dot(_axis) * x.dot(_axis));
         double c = x.dot(x) - (1 + _tangent * _tangent) * x.dot(_axis) * x.dot(_axis);
 
         double discriminant = b * b - 4 * a * c;
@@ -41,8 +41,10 @@ namespace RayTracer {
         }
         
         Math::Vector3D point  = ray.at(distance);
-        Math::Vector3D normal = (point - _vertex).normalized();
-
+        double m = (point - _vertex).dot(_axis);
+        Math::Vector3D normal = (point - _vertex - _axis * (1 +  _tangent * _tangent) * m).normalized();
+        if (m < _minimum || m > _maximum)
+            return Intersection();
         return Intersection(true, distance, point, normal, _color);
     }
 }

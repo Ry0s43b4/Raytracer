@@ -112,8 +112,8 @@ void SceneBuilder::addCones(Scene &scene, const std::vector<ConeData> &cones)
             Math::Vector3D(p.x, p.y, p.z),
             normal,
             p.radius,
-            0.0, // a changer
-            2.0,// a changer
+            p.maximum,
+            p.minimum,
             Color(p.color.r, p.color.g, p.color.b)
         ));
     }
