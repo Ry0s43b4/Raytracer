@@ -9,7 +9,12 @@
 
 namespace {
 
-class FakePrimitive : public IPrimitive {
+class FakePrimitive : public RayTracer::IPrimitive {
+public:
+    RayTracer::Intersection intersect(const RayTracer::Ray &) const override
+    {
+        return RayTracer::Intersection();
+    }
 };
 
 class FakeLight : public RayTracer::ILight {

@@ -5,42 +5,66 @@
 ** Cylinder
 */
 
+#include <cmath>
+#include <limits>
+
 #include "Primitives/Cylinder.hpp"
 
 namespace RayTracer {
 
-    Cylinder::Cylinder(
-        const Math::Vector3D &center,
-        const Math::Vector3D &cylinderAxis,
-        double radius,
-        const Color &color
-    )
-    : _center(center), _cylinderAxis(cylinderAxis), _radius(radius), _color(color)
-    {
-    }
-    
-    Intersection Cylinder::intersect(const Ray &ray) const
-    {
-        Math::Vector3D x = ray.origin() - _center;
+Cylinder::Cylinder(
+    const Math::Vector3D &center,
+    const Math::Vector3D &cylinderAxis,
+    double radius,
+    const Color &color
+)
+    : _center(center),
+      _cylinderAxis(cylinderAxis.normalized()),
+      _radius(radius),
+      _color(color)
+{
+}
 
-        double a = ray.direction().dot(ray.direction()) - (ray.direction().dot(_cylinderAxis)) * (ray.direction().dot(_cylinderAxis));
-        double b = 2 * ray.direction().dot(x) - (ray.direction().dot(_cylinderAxis) * x.dot(_cylinderAxis));
-        double c = x.dot(x) - x.dot(_cylinderAxis) * x.dot(_cylinderAxis) - _radius * _radius;
-        double discriminant = b * b - 4 * a * c;
-        
-        if (discriminant < 0)
-            return Intersection();
+Intersection Cylinder::intersect(const Ray &ray) const
+{
+    Math::Vector3D x = ray.origin() - _center;
 
-        double distance = (-b - std::sqrt(discriminant)) / (2.0 * a);
-        if (distance <= 0.001) {
-            distance = (-b + std::sqrt(discriminant)) / (2.0 * a);
-            if (distance <= 0.001)
-                return Intersection();
-        }
+    double a = ray.direction().dot(ray.direction())
+        - std::pow(ray.direction().dot(_cylinderAxis), 2);
+    double b = 2.0 * ray.direction().dot(x)
+        - 2.0 * (ray.direction().dot(_cylinderAxis) * x.dot(_cylinderAxis));
+    double c = x.dot(x) - std::pow(x.dot(_cylinderAxis), 2) - _radius * _radius;
+    double discriminant = b * b - 4.0 * a * c;
 
-        Math::Vector3D point  = ray.at(distance);
-        Math::Vector3D normal = (point - _center).normalized();
+    if (discriminant < 0.0)
+        return Intersection();
 
-        return Intersection(true, distance, point, normal, _color);
-    }
+    double sqrtd = std::sqrt(discriminant);
+    double inv2a = 1.0 / (2.0 * a);
+    double t0 = (-b - sqrtd) * inv2a;
+    double t1 = (-b + sqrtd) * inv2a;
+
+    constexpr double kSurfEps = 1e-3;
+    double distance = std::numeric_limits<double>::infinity();
+
+    if (t0 > kSurfEps)
+        distance = t0;
+    if (t1 > kSurfEps)
+        distance = std::min(distance, t1);
+    if (!std::isfinite(distance))
+        return Intersection();
+
+    Math::Vector3D point = ray.at(distance);
+    Math::Vector3D v = point - _center;
+    Math::Vector3D radial = v - _cylinderAxis * v.dot(_cylinderAxis);
+    double radialLenSq = radial.dot(radial);
+
+    if (radialLenSq < 1e-18)
+        return Intersection();
+
+    Math::Vector3D normal = radial / std::sqrt(radialLenSq);
+
+    return Intersection(true, distance, point, normal, _color);
+}
+
 }
