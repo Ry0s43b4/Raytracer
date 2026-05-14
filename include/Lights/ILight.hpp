@@ -7,11 +7,16 @@
 
 #pragma once
 
+#include <memory>
+#include <vector>
+
 #include "Math/Vector3D.hpp"
 #include "Core/Color.hpp"
 #include "Core/Intersection.hpp"
 
 namespace RayTracer {
+
+class IPrimitive;
 
 class ILight {
 public:
@@ -19,7 +24,8 @@ public:
 
     virtual Color computeLight(
         const Intersection &intersection,
-        const Math::Vector3D &viewDir
+        const Math::Vector3D &viewDir,
+        const std::vector<std::unique_ptr<IPrimitive>> &primitives
     ) const = 0;
 };
 

@@ -17,7 +17,8 @@ public:
 
     Color computeLight(
         const Intersection &intersection,
-        const Math::Vector3D &viewDir
+        const Math::Vector3D &viewDir,
+        const std::vector<std::unique_ptr<IPrimitive>> &primitives
     ) const override;
 
 private:
