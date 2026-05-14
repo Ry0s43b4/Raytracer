@@ -10,14 +10,14 @@
 
 namespace RayTracer {
 
-std::unique_ptr<RayTracer::ILight> LightFactory::Create(const std::string &type, double intensity, const Math::Vector3D &direction)
+std::unique_ptr<RayTracer::ILight> LightFactory::Create(const std::string &type, double intensity, const Math::Vector3D &directionOrPosition)
 {
-    if (type == "ambient") {
-            return std::make_unique<RayTracer::AmbientLight>(intensity);
-        }
-    if (type == "directional") {
-        return std::make_unique<RayTracer::DirectionalLight>(direction, intensity);
-    }
+    if (type == "ambient")
+        return std::make_unique<RayTracer::AmbientLight>(intensity);
+    if (type == "directional")
+        return std::make_unique<RayTracer::DirectionalLight>(directionOrPosition, intensity);
+    if (type == "point")
+        return std::make_unique<RayTracer::PointLight>(directionOrPosition, intensity);
     throw RayTracer::RaytracerError("LightFactory: unknow type: " + type + "\n");
 }
 
