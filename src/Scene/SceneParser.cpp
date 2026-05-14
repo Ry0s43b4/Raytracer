@@ -25,6 +25,8 @@ SceneData SceneParser::parse()
     data.spheres = parseSpheres();
     data.planes = parsePlanes();
     data.lights = parseLights();
+    data.cylinders = parseCylinders();
+    data.cones = parseCones();
 
     return data;
 }
@@ -86,6 +88,7 @@ std::vector<SphereData> SceneParser::parseSpheres() const
         sphere.z = s.lookup("z");
         sphere.radius = s.lookup("r");
         sphere.color = parseColor(s.lookup("color"));
+        sphere.transform = parseTransformIfAny(s);
 
         spheres.push_back(sphere);
     }
@@ -114,6 +117,61 @@ std::vector<PlaneData> SceneParser::parsePlanes() const
     }
 
     return planes;
+}
+
+std::vector<CylinderData> SceneParser::parseCylinders() const
+{
+    std::vector<CylinderData> cylinders;
+
+    if (!_config.exists("primitives.cylinders"))
+        return cylinders;
+
+    const libconfig::Setting &settings = _config.lookup("primitives.cylinders");
+
+    for (int i = 0; i < settings.getLength(); ++i) {
+        const libconfig::Setting &c = settings[i];
+
+        CylinderData cylinder;
+        cylinder.x = c.lookup("x");
+        cylinder.y = c.lookup("y");
+        cylinder.z = c.lookup("z");
+        cylinder.axis = static_cast<const char *>(c.lookup("axis"));
+        cylinder.radius = c.lookup("r");
+        cylinder.color = parseColor(c.lookup("color"));
+        cylinder.transform = parseTransformIfAny(c);
+
+        cylinders.push_back(cylinder);
+    }
+
+    return cylinders;
+}
+
+std::vector<ConeData> SceneParser::parseCones() const
+{
+    std::vector<ConeData> cones;
+
+    if (!_config.exists("primitives.cones"))
+        return cones;
+
+    const libconfig::Setting &settings = _config.lookup("primitives.cones");
+
+    for (int i = 0; i < settings.getLength(); ++i) {
+        const libconfig::Setting &c = settings[i];
+
+        ConeData cone;
+        cone.x = c.lookup("x");
+        cone.y = c.lookup("y");
+        cone.z = c.lookup("z");
+        cone.axis = static_cast<const char *>(c.lookup("axis"));
+        cone.radius = c.lookup("r");
+        cone.maximum = c.lookup("max");
+        cone.minimum = c.lookup("min");
+        cone.color = parseColor(c.lookup("color"));
+
+        cones.push_back(cone);
+    }
+
+    return cones;
 }
 
 LightData SceneParser::parseLights() const
@@ -187,6 +245,39 @@ ColorData SceneParser::parseColor(const libconfig::Setting &setting) const
     color.b = setting.lookup("b");
 
     return color;
+}
+
+TransformData SceneParser::parseTransformIfAny(const libconfig::Setting &setting) const
+{
+    TransformData out;
+
+    if (!setting.exists("transform"))
+        return out;
+
+    out.enabled = true;
+
+    try {
+        const libconfig::Setting &tf = setting.lookup("transform");
+
+        if (tf.exists("translation")) {
+            const libconfig::Setting &tr = tf.lookup("translation");
+
+            out.tx = tr.lookup("x");
+            out.ty = tr.lookup("y");
+            out.tz = tr.lookup("z");
+        }
+        if (tf.exists("rotation")) {
+            const libconfig::Setting &rr = tf.lookup("rotation");
+
+            out.rx = rr.lookup("x");
+            out.ry = rr.lookup("y");
+            out.rz = rr.lookup("z");
+        }
+    } catch (const libconfig::SettingException &e) {
+        throw RaytracerError("Invalid or missing transform field: " + std::string(e.getPath()));
+    }
+
+    return out;
 }
 
 }

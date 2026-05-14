@@ -30,17 +30,49 @@ struct ColorData {
     int b;
 };
 
+struct TransformData {
+    bool enabled = false;
+    double tx = 0.0;
+    double ty = 0.0;
+    double tz = 0.0;
+    double rx = 0.0;
+    double ry = 0.0;
+    double rz = 0.0;
+};
+
 struct SphereData {
     double x;
     double y;
     double z;
     double radius;
     ColorData color;
+    TransformData transform;
 };
 
 struct PlaneData {
     std::string axis;
     double position;
+    ColorData color;
+};
+
+struct CylinderData {
+    double x;
+    double y;
+    double z;
+    std::string axis;
+    double radius;
+    ColorData color;
+    TransformData transform;
+};
+
+struct ConeData {
+    double x;
+    double y;
+    double z;
+    std::string axis;
+    double radius;
+    double minimum;
+    double maximum;
     ColorData color;
 };
 
@@ -67,6 +99,8 @@ struct SceneData {
     CameraData camera;
     std::vector<SphereData> spheres;
     std::vector<PlaneData> planes;
+    std::vector<CylinderData> cylinders;
+    std::vector<ConeData> cones;
     LightData lights;
 };
 

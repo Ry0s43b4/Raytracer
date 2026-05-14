@@ -23,6 +23,10 @@ primitives:
         # Floor plane on Z axis, sitting below the spheres
         { axis = "Y"; position = -1.0; color = { r = 200; g = 200; b = 200; }; }
     );
+
+    cylinders = (
+        { x = 4.0; y = 0.0; z = 6.0; axis = "Y"; r = 0.2; color = { r = 0; g = 0; b = 255; }; }
+    )
 };
 
 # Light configuration

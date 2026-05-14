@@ -11,6 +11,10 @@
 #include "Scene/Camera.hpp"
 #include "Primitives/Sphere.hpp"
 #include "Primitives/Plane.hpp"
+#include "Primitives/Cylinder.hpp"
+#include "Primitives/Cone.hpp"
+#include "Primitives/TransformedPrimitive.hpp"
+#include "Transformation/TransformationComposer.hpp"
 #include "Lights/AmbientLight.hpp"
 #include "Lights/DirectionalLight.hpp"
 #include "Math/Vector3D.hpp"
@@ -26,7 +30,8 @@ Scene SceneBuilder::build(const SceneData &data)
     addSpheres(scene, data.spheres);
     addPlanes(scene, data.planes);
     addLights(scene, data.lights);
-
+    addCylinders(scene, data.cylinders);
+    addCones(scene, data.cones);
     return scene;
 }
 
@@ -44,11 +49,32 @@ Camera SceneBuilder::buildCamera(const CameraData &data)
 void SceneBuilder::addSpheres(Scene &scene, const std::vector<SphereData> &spheres)
 {
     for (const auto &s : spheres) {
-        scene.addPrimitive(std::make_unique<Sphere>(
-            Math::Vector3D(s.x, s.y, s.z),
-            s.radius,
-            Color(s.color.r, s.color.g, s.color.b)
-        ));
+        Color color(s.color.r, s.color.g, s.color.b);
+
+        if (s.transform.enabled) {
+            const Math::Vector3D translation(
+                s.x + s.transform.tx,
+                s.y + s.transform.ty,
+                s.z + s.transform.tz
+            );
+            const Math::Vector3D euler(s.transform.rx, s.transform.ry, s.transform.rz);
+            const TransformationComposer pose(translation, euler);
+
+            scene.addPrimitive(std::make_unique<TransformedPrimitive>(
+                std::make_unique<Sphere>(
+                    Math::Vector3D(0.0, 0.0, 0.0),
+                    s.radius,
+                    color
+                ),
+                pose
+            ));
+        } else {
+            scene.addPrimitive(std::make_unique<Sphere>(
+                Math::Vector3D(s.x, s.y, s.z),
+                s.radius,
+                color
+            ));
+        }
     }
 }
 
@@ -67,6 +93,72 @@ void SceneBuilder::addPlanes(Scene &scene, const std::vector<PlaneData> &planes)
         scene.addPrimitive(std::make_unique<Plane>(
             normal,
             p.position,
+            Color(p.color.r, p.color.g, p.color.b)
+        ));
+    }
+}
+
+void SceneBuilder::addCylinders(Scene &scene, const std::vector<CylinderData> &cylinders)
+{
+    for (const auto &p : cylinders) {
+        Color color(p.color.r, p.color.g, p.color.b);
+
+        if (p.transform.enabled) {
+            const Math::Vector3D translation(
+                p.x + p.transform.tx,
+                p.y + p.transform.ty,
+                p.z + p.transform.tz
+            );
+            const Math::Vector3D euler(p.transform.rx, p.transform.ry, p.transform.rz);
+            const TransformationComposer pose(translation, euler);
+
+            scene.addPrimitive(std::make_unique<TransformedPrimitive>(
+                std::make_unique<Cylinder>(
+                    Math::Vector3D(0.0, 0.0, 0.0),
+                    Math::Vector3D(0.0, 0.0, 1.0),
+                    p.radius,
+                    color
+                ),
+                pose
+            ));
+        } else {
+            Math::Vector3D normal;
+
+            if (p.axis == "X")
+                normal = Math::Vector3D(1, 0, 0);
+            else if (p.axis == "Y")
+                normal = Math::Vector3D(0, 1, 0);
+            else
+                normal = Math::Vector3D(0, 0, 1);
+
+            scene.addPrimitive(std::make_unique<Cylinder>(
+                Math::Vector3D(p.x, p.y, p.z),
+                normal,
+                p.radius,
+                color
+            ));
+        }
+    }
+}
+
+void SceneBuilder::addCones(Scene &scene, const std::vector<ConeData> &cones)
+{
+    for (const auto &p : cones) {
+        Math::Vector3D normal;
+
+        if (p.axis == "X")
+            normal = Math::Vector3D(1, 0, 0);
+        else if (p.axis == "Y")
+            normal = Math::Vector3D(0, 1, 0);
+        else
+            normal = Math::Vector3D(0, 0, 1);
+
+        scene.addPrimitive(std::make_unique<Cone>(
+            Math::Vector3D(p.x, p.y, p.z),
+            normal,
+            p.radius,
+            p.maximum,
+            p.minimum,
             Color(p.color.r, p.color.g, p.color.b)
         ));
     }
