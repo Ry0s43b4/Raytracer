@@ -17,6 +17,7 @@
 #include "Transformation/TransformationComposer.hpp"
 #include "Lights/AmbientLight.hpp"
 #include "Lights/DirectionalLight.hpp"
+#include "Lights/PointLight.hpp"
 #include "Math/Vector3D.hpp"
 #include "Core/Color.hpp"
 
@@ -175,8 +176,12 @@ void SceneBuilder::addLights(Scene &scene, const LightData &lights)
         ));
     }
 
-    // Point lights — to be implemented when PointLight class exists
-    // for (const auto &p : lights.points) { ... }
+    for (const auto &p : lights.points) {
+        scene.addLight(std::make_unique<PointLight>(
+            Math::Vector3D(p.x, p.y, p.z),
+            lights.diffuse
+        ));
+    }
 }
 
 }
