@@ -65,6 +65,17 @@ struct CylinderData {
     TransformData transform;
 };
 
+struct ConeData {
+    double x;
+    double y;
+    double z;
+    std::string axis;
+    double radius;
+    double minimum;
+    double maximum;
+    ColorData color;
+};
+
 struct DirectionalLightData {
     double x;
     double y;
@@ -89,6 +100,7 @@ struct SceneData {
     std::vector<SphereData> spheres;
     std::vector<PlaneData> planes;
     std::vector<CylinderData> cylinders;
+    std::vector<ConeData> cones;
     LightData lights;
 };
 
