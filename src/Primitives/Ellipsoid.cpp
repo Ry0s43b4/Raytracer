@@ -5,7 +5,7 @@
 ** Ellipsoid
 */
 
-#include "Ellipsoid.hpp"
+#include "Primitives/Ellipsoid.hpp"
 
 namespace RayTracer {
 
@@ -24,10 +24,12 @@ namespace RayTracer {
     {
         Math::Vector3D x = ray.origin() - _center;
 
-        double a = 4 * _radius * _radius * (ray.direction().dot(_ellipsoidAxis) * ray.direction().dot(_ellipsoidAxis));
-        double b = 2 * (_radius * _radius * ray.direction().dot(x) - 2 * (ray.direction().dot(_ellipsoidAxis)) * _distance * (_radius * _radius + 2 * x.dot(_ellipsoidAxis) * _distance - _distance));
-        double c = 4 * _radius * _radius * x.dot(x) - ((_radius * _radius + 2 * x.dot(_ellipsoidAxis) * _distance - _distance) * (_radius * _radius + 2 * x.dot(_ellipsoidAxis) * _distance - _distance));
-        
+        double A1 = 2 * _distance * ray.direction().dot(_ellipsoidAxis);
+        double A2 = (_radius * _radius) + 2 * _distance * (x.dot(_ellipsoidAxis)) - _distance;
+        double a = 4 * (_radius * _radius) * ray.direction().dot(ray.direction()) - (A1 * A1);
+        double b = 2 * (4 * (_radius * _radius) * ray.direction().dot(x) - A1 * A2);
+        double c = 4 * (_radius * _radius) * x.dot(x) - (A2 * A2);
+
         double discriminant = b * b - 4 * a * c;
         if (discriminant < 0)
             return Intersection();
