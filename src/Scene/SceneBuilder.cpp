@@ -24,6 +24,7 @@
 #include "Core/Color.hpp"
 #include "Core/RaytracerError.hpp"
 #include "Materials/IMaterial.hpp"
+#include "Materials/PhongMaterial.hpp"
 #include "Materials/ReflectionMaterial.hpp"
 #include "Materials/RefractionMaterial.hpp"
 #include "Materials/TransparencyMaterial.hpp"
@@ -38,6 +39,9 @@ std::shared_ptr<IMaterial> makeSphereMaterial(const SphereData &s)
 
     if (s.materialType.empty())
         return nullptr;
+
+    if (s.materialType == "phong")
+        return std::make_shared<PhongMaterial>(s.materialShininess, s.materialSpecularStrength);
 
     if (s.materialType == "reflection")
         return std::make_shared<ReflectionMaterial>(surface);

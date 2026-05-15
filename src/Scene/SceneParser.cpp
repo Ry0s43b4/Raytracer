@@ -99,6 +99,10 @@ std::vector<SphereData> SceneParser::parseSpheres() const
                     sphere.materialIor = m.lookup("ior");
                 if (m.exists("transmission"))
                     sphere.materialTransmission = m.lookup("transmission");
+                if (m.exists("shininess"))
+                    sphere.materialShininess = m.lookup("shininess");
+                if (m.exists("specularStrength"))
+                    sphere.materialSpecularStrength = m.lookup("specularStrength");
             } catch (const libconfig::SettingException &e) {
                 throw RaytracerError(
                     "Invalid or missing sphere material field: " + std::string(e.getPath())
