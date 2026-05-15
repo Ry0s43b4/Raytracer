@@ -133,6 +133,23 @@ std::vector<PlaneData> SceneParser::parsePlanes() const
         plane.position = p.lookup("position");
         plane.color = parseColor(p.lookup("color"));
 
+        if (p.exists("material")) {
+            const libconfig::Setting &m = p.lookup("material");
+            try {
+                plane.materialType = static_cast<const char *>(m.lookup("type"));
+                if (m.exists("ior"))
+                    plane.materialIor = m.lookup("ior");
+                if (m.exists("transmission"))
+                    plane.materialTransmission = m.lookup("transmission");
+                if (m.exists("shininess"))
+                    plane.materialShininess = m.lookup("shininess");
+                if (m.exists("specularStrength"))
+                    plane.materialSpecularStrength = m.lookup("specularStrength");
+            } catch (const libconfig::SettingException &e) {
+                throw RaytracerError("Invalid or missing plane material field: " + std::string(e.getPath()));
+            }
+        }
+
         planes.push_back(plane);
     }
 
@@ -159,6 +176,23 @@ std::vector<CylinderData> SceneParser::parseCylinders() const
         cylinder.radius = c.lookup("r");
         cylinder.color = parseColor(c.lookup("color"));
         cylinder.transform = parseTransformIfAny(c);
+
+        if (c.exists("material")) {
+            const libconfig::Setting &m = c.lookup("material");
+            try {
+                cylinder.materialType = static_cast<const char *>(m.lookup("type"));
+                if (m.exists("ior"))
+                    cylinder.materialIor = m.lookup("ior");
+                if (m.exists("transmission"))
+                    cylinder.materialTransmission = m.lookup("transmission");
+                if (m.exists("shininess"))
+                    cylinder.materialShininess = m.lookup("shininess");
+                if (m.exists("specularStrength"))
+                    cylinder.materialSpecularStrength = m.lookup("specularStrength");
+            } catch (const libconfig::SettingException &e) {
+                throw RaytracerError("Invalid or missing cylinder material field: " + std::string(e.getPath()));
+            }
+        }
 
         cylinders.push_back(cylinder);
     }
@@ -188,6 +222,23 @@ std::vector<ConeData> SceneParser::parseCones() const
         cone.minimum = c.lookup("min");
         cone.color = parseColor(c.lookup("color"));
 
+        if (c.exists("material")) {
+            const libconfig::Setting &m = c.lookup("material");
+            try {
+                cone.materialType = static_cast<const char *>(m.lookup("type"));
+                if (m.exists("ior"))
+                    cone.materialIor = m.lookup("ior");
+                if (m.exists("transmission"))
+                    cone.materialTransmission = m.lookup("transmission");
+                if (m.exists("shininess"))
+                    cone.materialShininess = m.lookup("shininess");
+                if (m.exists("specularStrength"))
+                    cone.materialSpecularStrength = m.lookup("specularStrength");
+            } catch (const libconfig::SettingException &e) {
+                throw RaytracerError("Invalid or missing cone material field: " + std::string(e.getPath()));
+            }
+        }
+
         cones.push_back(cone);
     }
 
@@ -214,6 +265,23 @@ std::vector<EllipsoidData> SceneParser::parseEllipsoids() const
         ellipsoid.radius = c.lookup("r");
         ellipsoid.distance = c.lookup("distance");
         ellipsoid.color = parseColor(c.lookup("color"));
+
+        if (c.exists("material")) {
+            const libconfig::Setting &m = c.lookup("material");
+            try {
+                ellipsoid.materialType = static_cast<const char *>(m.lookup("type"));
+                if (m.exists("ior"))
+                    ellipsoid.materialIor = m.lookup("ior");
+                if (m.exists("transmission"))
+                    ellipsoid.materialTransmission = m.lookup("transmission");
+                if (m.exists("shininess"))
+                    ellipsoid.materialShininess = m.lookup("shininess");
+                if (m.exists("specularStrength"))
+                    ellipsoid.materialSpecularStrength = m.lookup("specularStrength");
+            } catch (const libconfig::SettingException &e) {
+                throw RaytracerError("Invalid or missing ellipsoid material field: " + std::string(e.getPath()));
+            }
+        }
 
         ellipsoids.push_back(ellipsoid);
     }
