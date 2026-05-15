@@ -24,9 +24,6 @@ namespace RayTracer {
 ///   - extern "C" RayTracer::IGraphical *create();
 ///   - extern "C" void destroy(RayTracer::IGraphical *);
 ///
-/// SFML is the first such backend; future plugins (SDL, ncurses, ...) only
-/// need to derive from IGraphical and export those two symbols.
-///
 class IGraphical {
 public:
     virtual ~IGraphical() = default;
