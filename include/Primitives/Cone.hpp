@@ -5,30 +5,39 @@
 ** Cone
 */
 
+#pragma once
+
+#include <memory>
+
 #include "Primitives/IPrimitive.hpp"
 #include "Math/Vector3D.hpp"
 #include "Core/Color.hpp"
+#include "Materials/IMaterial.hpp"
 
 namespace RayTracer {
-    class Cone : public IPrimitive {
-        public:
-        Cone(
-            const Math::Vector3D &vertex,
-            const Math::Vector3D &axis,
-            double tangent,
-            double maximum,
-            double minimum,
-            const Color &color
-        );
 
-        Intersection intersect(const Ray &ray) const override;
+class Cone : public IPrimitive {
+public:
+    Cone(
+        const Math::Vector3D &vertex,
+        const Math::Vector3D &axis,
+        double tangent,
+        double maximum,
+        double minimum,
+        const Color &color,
+        const std::shared_ptr<IMaterial> &material = nullptr
+    );
 
-        private:
-            Math::Vector3D _vertex;
-            Math::Vector3D _axis;
-            double _tangent;
-            double _maximum;
-            double _minimum;
-            Color _color;
-    };
+    Intersection intersect(const Ray &ray) const override;
+
+private:
+    Math::Vector3D _vertex;
+    Math::Vector3D _axis;
+    double _tangent;
+    double _maximum;
+    double _minimum;
+    Color _color;
+    std::shared_ptr<IMaterial> _material;
+};
+
 }

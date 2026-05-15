@@ -15,9 +15,10 @@ namespace RayTracer {
         double tangent,
         double maximum,
         double minimum,
-        const Color &color
+        const Color &color,
+        const std::shared_ptr<IMaterial> &material
     )
-    : _vertex(vertex), _axis(axis.normalized()), _tangent(tangent), _maximum(maximum), _minimum(minimum), _color(color)
+    : _vertex(vertex), _axis(axis.normalized()), _tangent(tangent), _maximum(maximum), _minimum(minimum), _color(color), _material(material)
     {
     }
     
@@ -45,6 +46,6 @@ namespace RayTracer {
         Math::Vector3D normal = (point - _vertex - _axis * (1 +  _tangent * _tangent) * m).normalized();
         if (m < _minimum || m > _maximum)
             return Intersection();
-        return Intersection(true, distance, point, normal, _color);
+        return Intersection(true, distance, point, normal, _color, _material);
     }
 }
