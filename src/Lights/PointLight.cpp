@@ -9,6 +9,7 @@
 #include <cmath>
 #include <memory>
 #include <vector>
+
 #include "Lights/PointLight.hpp"
 #include "Primitives/IPrimitive.hpp"
 #include "Math/Ray.hpp"
@@ -25,6 +26,7 @@ PointLight::PointLight(const Math::Vector3D &position, double intensity)
 Color PointLight::computeLight(
     const Intersection &intersection,
     const Math::Vector3D &/*viewDir*/,
+    const Ray &/*eyeRay*/,
     const std::vector<std::unique_ptr<IPrimitive>> &primitives
 ) const
 {

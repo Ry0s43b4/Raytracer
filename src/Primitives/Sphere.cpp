@@ -6,6 +6,7 @@
 */
 
 #include <cmath>
+#include <limits>
 #include "Primitives/Sphere.hpp"
 
 namespace RayTracer {
@@ -13,9 +14,10 @@ namespace RayTracer {
 Sphere::Sphere(
     const Math::Vector3D &center,
     double radius,
-    const Color &color
+    const Color &color,
+    const std::shared_ptr<IMaterial> &material
 )
-    : _center(center), _radius(radius), _color(color)
+    : _center(center), _radius(radius), _color(color), _material(material)
 {
 }
 
@@ -31,17 +33,25 @@ Intersection Sphere::intersect(const Ray &ray) const
     if (discriminant < 0)
         return Intersection();
 
-    double distance = (-b - std::sqrt(discriminant)) / (2.0 * a);
-    if (distance <= 0.001) {
-        distance = (-b + std::sqrt(discriminant)) / (2.0 * a);
-        if (distance <= 0.001)
-            return Intersection();
-    }
+    double sqrtd = std::sqrt(discriminant);
+    double inv2a = 1.0 / (2.0 * a);
+    double t0 = (-b - sqrtd) * inv2a;
+    double t1 = (-b + sqrtd) * inv2a;
+
+    constexpr double kSurfEps = 1e-3;
+    double distance = std::numeric_limits<double>::infinity();
+
+    if (t0 > kSurfEps)
+        distance = t0;
+    if (t1 > kSurfEps)
+        distance = std::min(distance, t1);
+    if (!std::isfinite(distance))
+        return Intersection();
 
     Math::Vector3D point  = ray.at(distance);
     Math::Vector3D normal = (point - _center).normalized();
 
-    return Intersection(true, distance, point, normal, _color);
+    return Intersection(true, distance, point, normal, _color, _material);
 }
 
 }

@@ -47,6 +47,11 @@ struct SphereData {
     double radius;
     ColorData color;
     TransformData transform;
+    /// Empty string = flat color. Otherwise: "reflection", "refraction", "transparency".
+    std::string materialType;
+    double materialIor = 1.5;
+    /// For transparency material: 0 = opaque, 1 = fully see-through.
+    double materialTransmission = 0.65;
 };
 
 struct PlaneData {
@@ -76,6 +81,16 @@ struct ConeData {
     ColorData color;
 };
 
+struct EllipsoidData {
+    double x;
+    double y;
+    double z;
+    std::string axis;
+    double radius;
+    double distance;
+    ColorData color;
+};
+
 struct DirectionalLightData {
     double x;
     double y;
@@ -101,6 +116,7 @@ struct SceneData {
     std::vector<PlaneData> planes;
     std::vector<CylinderData> cylinders;
     std::vector<ConeData> cones;
+    std::vector<EllipsoidData> ellipsoids;
     LightData lights;
 };
 

@@ -18,11 +18,14 @@ public:
     Image render(const Scene &scene) const;
 
 private:
-    Intersection castRay(const RayTracer::Ray &ray, const Scene &scene) const;
+    static constexpr int kMaxTraceDepth = 8;
 
-    Color computeColor(
+    Color traceRay(const Ray &ray, const Scene &scene, int depth) const;
+    Intersection castRay(const Ray &ray, const Scene &scene, double tMin) const;
+
+    Color computeDirectLighting(
         const Intersection &intersection,
-        const RayTracer::Ray &ray,
+        const Ray &eyeRay,
         const Scene &scene
     ) const;
 };

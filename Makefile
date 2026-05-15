@@ -56,7 +56,9 @@ TEST_SRC = $(TEST_FILES) \
 	   src/Math/Vector3D.cpp \
 	   src/Scene/SceneParser.cpp \
 	   src/Core/RaytracerError.cpp \
-	   src/Core/Intersection.cpp
+	   src/Core/Intersection.cpp \
+	   src/Materials/Metal.cpp \
+	   src/Materials/ReflectionMaterial.cpp
 
 SRC		=	$(shell find $(SRC_DIR) -type f -name "*.cpp")
 OBJ		=	$(SRC:.cpp=.o)
