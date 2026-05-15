@@ -5,9 +5,14 @@
 ** Ellipsoid
 */
 
+#pragma once
+
+#include <memory>
+
 #include "Primitives/IPrimitive.hpp"
 #include "Math/Vector3D.hpp"
 #include "Core/Color.hpp"
+#include "Materials/IMaterial.hpp"
 
 namespace RayTracer {
 
@@ -18,7 +23,8 @@ public:
         const Math::Vector3D &ellipsoidAxis,
         double radius,
         double distance,
-        const Color &color
+        const Color &color,
+        const std::shared_ptr<IMaterial> &material = nullptr
     );
 
     Intersection intersect(const Ray &ray) const override;
@@ -29,6 +35,7 @@ private:
     double _radius;
     double _distance;
     Color _color;
+    std::shared_ptr<IMaterial> _material;
 };
 
 }

@@ -24,6 +24,7 @@
 #include "Core/Color.hpp"
 #include "Core/RaytracerError.hpp"
 #include "Materials/IMaterial.hpp"
+#include "Materials/PhongMaterial.hpp"
 #include "Materials/ReflectionMaterial.hpp"
 #include "Materials/RefractionMaterial.hpp"
 #include "Materials/TransparencyMaterial.hpp"
@@ -32,23 +33,31 @@ namespace RayTracer {
 
 namespace {
 
-std::shared_ptr<IMaterial> makeSphereMaterial(const SphereData &s)
+std::shared_ptr<IMaterial> makeMaterial(
+    const std::string &type,
+    double shininess,
+    double specularStrength,
+    double ior,
+    double transmission,
+    const Color &surface
+)
 {
-    Color surface(s.color.r, s.color.g, s.color.b);
-
-    if (s.materialType.empty())
+    if (type.empty())
         return nullptr;
 
-    if (s.materialType == "reflection")
+    if (type == "phong")
+        return std::make_shared<PhongMaterial>(shininess, specularStrength);
+
+    if (type == "reflection")
         return std::make_shared<ReflectionMaterial>(surface);
 
-    if (s.materialType == "refraction")
-        return std::make_shared<RefractionMaterial>(surface, s.materialIor);
+    if (type == "refraction")
+        return std::make_shared<RefractionMaterial>(surface, ior);
 
-    if (s.materialType == "transparency")
-        return std::make_shared<TransparencyMaterial>(s.materialTransmission);
+    if (type == "transparency")
+        return std::make_shared<TransparencyMaterial>(transmission);
 
-    throw RaytracerError("Unknown sphere material type: " + s.materialType);
+    throw RaytracerError("Unknown material type: " + type);
 }
 
 }
@@ -82,7 +91,7 @@ void SceneBuilder::addSpheres(Scene &scene, const std::vector<SphereData> &spher
 {
     for (const auto &s : spheres) {
         Color color(s.color.r, s.color.g, s.color.b);
-        auto material = makeSphereMaterial(s);
+        auto material = makeMaterial(s.materialType, s.materialShininess, s.materialSpecularStrength, s.materialIor, s.materialTransmission, color);
 
         if (s.transform.enabled) {
             const Math::Vector3D translation(
@@ -125,10 +134,14 @@ void SceneBuilder::addPlanes(Scene &scene, const std::vector<PlaneData> &planes)
         else
             normal = Math::Vector3D(0, 0, 1);
 
+        Color color(p.color.r, p.color.g, p.color.b);
+        auto material = makeMaterial(p.materialType, p.materialShininess, p.materialSpecularStrength, p.materialIor, p.materialTransmission, color);
+
         scene.addPrimitive(std::make_unique<Plane>(
             normal,
             p.position,
-            Color(p.color.r, p.color.g, p.color.b)
+            color,
+            material
         ));
     }
 }
@@ -137,6 +150,7 @@ void SceneBuilder::addCylinders(Scene &scene, const std::vector<CylinderData> &c
 {
     for (const auto &p : cylinders) {
         Color color(p.color.r, p.color.g, p.color.b);
+        auto material = makeMaterial(p.materialType, p.materialShininess, p.materialSpecularStrength, p.materialIor, p.materialTransmission, color);
 
         if (p.transform.enabled) {
             const Math::Vector3D translation(
@@ -153,7 +167,7 @@ void SceneBuilder::addCylinders(Scene &scene, const std::vector<CylinderData> &c
                     Math::Vector3D(0.0, 0.0, 1.0),
                     p.radius,
                     color,
-                    nullptr
+                    material
                 ),
                 pose
             ));
@@ -172,7 +186,7 @@ void SceneBuilder::addCylinders(Scene &scene, const std::vector<CylinderData> &c
                 normal,
                 p.radius,
                 color,
-                nullptr
+                material
             ));
         }
     }
@@ -190,13 +204,17 @@ void SceneBuilder::addCones(Scene &scene, const std::vector<ConeData> &cones)
         else
             normal = Math::Vector3D(0, 0, 1);
 
+        Color color(p.color.r, p.color.g, p.color.b);
+        auto material = makeMaterial(p.materialType, p.materialShininess, p.materialSpecularStrength, p.materialIor, p.materialTransmission, color);
+
         scene.addPrimitive(std::make_unique<Cone>(
             Math::Vector3D(p.x, p.y, p.z),
             normal,
             p.radius,
             p.maximum,
             p.minimum,
-            Color(p.color.r, p.color.g, p.color.b)
+            color,
+            material
         ));
     }
 }
@@ -213,12 +231,16 @@ void SceneBuilder::addEllipsoids(Scene &scene, const std::vector<EllipsoidData> 
         else
             normal = Math::Vector3D(0, 0, 1);
 
+        Color color(p.color.r, p.color.g, p.color.b);
+        auto material = makeMaterial(p.materialType, p.materialShininess, p.materialSpecularStrength, p.materialIor, p.materialTransmission, color);
+
         scene.addPrimitive(std::make_unique<Ellipsoid>(
             Math::Vector3D(p.x, p.y, p.z),
             normal,
             p.radius,
             p.distance,
-            Color(p.color.r, p.color.g, p.color.b)
+            color,
+            material
         ));
     }
 }

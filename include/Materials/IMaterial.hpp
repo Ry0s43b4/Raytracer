@@ -19,7 +19,6 @@ class IMaterial {
 public:
     virtual ~IMaterial() = default;
 
-    /// Combine direct lighting with recursive ray tracing (\p traceRay).
     virtual Color shade(
         const Ray &r_in,
         const Math::Vector3D &point,
@@ -28,6 +27,12 @@ public:
         const Color &directLighting,
         const std::function<Color(const Ray &)> &traceRay
     ) const = 0;
+
+    virtual bool needsSpecular() const { return false; }
+
+    virtual double shininess() const { return 0.0; }
+
+    virtual double specularStrength() const { return 0.0; }
 };
 
 }

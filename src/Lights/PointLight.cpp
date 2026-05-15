@@ -11,6 +11,7 @@
 #include <vector>
 
 #include "Lights/PointLight.hpp"
+#include "Materials/MaterialUtils.hpp"
 #include "Primitives/IPrimitive.hpp"
 #include "Math/Ray.hpp"
 
@@ -21,6 +22,26 @@ static constexpr double SHADOW_EPSILON = 1e-4;
 PointLight::PointLight(const Math::Vector3D &position, double intensity)
     : _position(position), _intensity(intensity)
 {
+}
+
+bool PointLight::isInShadow(
+    const Intersection &intersection,
+    double distToLight,
+    const Math::Vector3D &toLightDir,
+    const std::vector<std::unique_ptr<IPrimitive>> &primitives
+) const
+{
+    Math::Vector3D shadowOrigin = intersection.point() + intersection.normal() * SHADOW_EPSILON;
+    Ray shadowRay(shadowOrigin, toLightDir);
+
+    for (const auto &primitive : primitives) {
+        Intersection shadowHit = primitive->intersect(shadowRay);
+        if (shadowHit.hasHit()
+            && shadowHit.distance() > SHADOW_EPSILON
+            && shadowHit.distance() < distToLight)
+            return true;
+    }
+    return false;
 }
 
 Color PointLight::computeLight(
@@ -42,16 +63,8 @@ Color PointLight::computeLight(
     if (diff <= 0.0)
         return Color(0, 0, 0);
 
-    Math::Vector3D shadowOrigin = intersection.point() + intersection.normal() * SHADOW_EPSILON;
-    Ray shadowRay(shadowOrigin, toLightDir);
-
-    for (const auto &primitive : primitives) {
-        Intersection shadowHit = primitive->intersect(shadowRay);
-        if (shadowHit.hasHit()
-            && shadowHit.distance() > SHADOW_EPSILON
-            && shadowHit.distance() < distToLight)
-            return Color(0, 0, 0);
-    }
+    if (isInShadow(intersection, distToLight, toLightDir, primitives))
+        return Color(0, 0, 0);
 
     double factor = diff * _intensity;
     const Color &c = intersection.color();
@@ -60,6 +73,39 @@ Color PointLight::computeLight(
         static_cast<int>(c.r * factor),
         static_cast<int>(c.g * factor),
         static_cast<int>(c.b * factor)
+    );
+}
+
+Color PointLight::computeSpecular(
+    const Intersection &intersection,
+    const Math::Vector3D &viewDir,
+    double shininess,
+    double specularStrength,
+    const std::vector<std::unique_ptr<IPrimitive>> &primitives
+) const
+{
+    Math::Vector3D toLight = _position - intersection.point();
+    double distToLight = toLight.length();
+
+    if (distToLight < SHADOW_EPSILON)
+        return Color(0, 0, 0);
+
+    Math::Vector3D toLightDir = toLight / distToLight;
+
+    if (intersection.normal().dot(toLightDir) <= 0.0)
+        return Color(0, 0, 0);
+
+    if (isInShadow(intersection, distToLight, toLightDir, primitives))
+        return Color(0, 0, 0);
+
+    Math::Vector3D R = reflect(toLightDir * -1.0, intersection.normal()).normalized();
+    double spec = std::pow(std::max(0.0, viewDir.dot(R)), shininess);
+    double factor = spec * specularStrength * _intensity;
+
+    return Color(
+        static_cast<int>(255 * factor),
+        static_cast<int>(255 * factor),
+        static_cast<int>(255 * factor)
     );
 }
 

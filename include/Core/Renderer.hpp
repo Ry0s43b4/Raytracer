@@ -28,6 +28,14 @@ private:
         const Ray &eyeRay,
         const Scene &scene
     ) const;
+
+    Color computeSpecularLighting(
+        const Intersection &intersection,
+        const Math::Vector3D &viewDir,
+        double shininess,
+        double specularStrength,
+        const Scene &scene
+    ) const;
 };
 
 }

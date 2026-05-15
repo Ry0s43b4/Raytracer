@@ -29,6 +29,14 @@ public:
         const Ray &eyeRay,
         const std::vector<std::unique_ptr<IPrimitive>> &primitives
     ) const = 0;
+
+    virtual Color computeSpecular(
+        const Intersection &/*intersection*/,
+        const Math::Vector3D &/*viewDir*/,
+        double /*shininess*/,
+        double /*specularStrength*/,
+        const std::vector<std::unique_ptr<IPrimitive>> &/*primitives*/
+    ) const { return Color(0, 0, 0); }
 };
 
 }

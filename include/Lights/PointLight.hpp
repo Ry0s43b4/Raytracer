@@ -22,9 +22,24 @@ public:
         const std::vector<std::unique_ptr<IPrimitive>> &primitives
     ) const override;
 
+    Color computeSpecular(
+        const Intersection &intersection,
+        const Math::Vector3D &viewDir,
+        double shininess,
+        double specularStrength,
+        const std::vector<std::unique_ptr<IPrimitive>> &primitives
+    ) const override;
+
 private:
     Math::Vector3D _position;
     double _intensity;
+
+    bool isInShadow(
+        const Intersection &intersection,
+        double distToLight,
+        const Math::Vector3D &toLightDir,
+        const std::vector<std::unique_ptr<IPrimitive>> &primitives
+    ) const;
 };
 
 }
