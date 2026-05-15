@@ -16,12 +16,14 @@ Cylinder::Cylinder(
     const Math::Vector3D &center,
     const Math::Vector3D &cylinderAxis,
     double radius,
-    const Color &color
+    const Color &color,
+    const std::shared_ptr<IMaterial> &material
 )
     : _center(center),
       _cylinderAxis(cylinderAxis.normalized()),
       _radius(radius),
-      _color(color)
+      _color(color),
+      _material(material)
 {
 }
 
@@ -64,7 +66,7 @@ Intersection Cylinder::intersect(const Ray &ray) const
 
     Math::Vector3D normal = radial / std::sqrt(radialLenSq);
 
-    return Intersection(true, distance, point, normal, _color);
+    return Intersection(true, distance, point, normal, _color, _material);
 }
 
 }

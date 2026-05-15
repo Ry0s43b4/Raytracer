@@ -13,9 +13,10 @@ namespace RayTracer {
 Plane::Plane(
     const Math::Vector3D &normal,
     double position,
-    const Color &color
+    const Color &color,
+    const std::shared_ptr<IMaterial> &material
 )
-    : _normal(normal.normalized()), _position(position), _color(color)
+    : _normal(normal.normalized()), _position(position), _color(color), _material(material)
 {
 }
 
@@ -24,7 +25,6 @@ Intersection Plane::intersect(const Ray &ray) const
     double denom = _normal.dot(ray.direction());
     double t;
     Math::Vector3D point;
-    Math::Vector3D normal;
 
     if (std::fabs(denom) < 1e-6)
         return Intersection();
@@ -35,8 +35,7 @@ Intersection Plane::intersect(const Ray &ray) const
         return Intersection();
 
     point = ray.at(t);
-    normal = (denom < 0) ? _normal : _normal * -1.0;
-    return Intersection(true, t, point, normal, _color);
+    return Intersection(true, t, point, _normal, _color, _material);
 }
 
 }

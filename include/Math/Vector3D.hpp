@@ -22,6 +22,7 @@ public:
     Vector3D(double x, double y, double z);
 
     double length() const;
+    double lengthSquared() const;
     double dot(const Vector3D &other) const;
     Vector3D normalized() const;
 

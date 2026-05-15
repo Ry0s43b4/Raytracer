@@ -7,6 +7,7 @@
 
 #include <memory>
 #include <vector>
+
 #include "Lights/AmbientLight.hpp"
 #include "Primitives/IPrimitive.hpp"
 
@@ -20,6 +21,7 @@ AmbientLight::AmbientLight(double intensity)
 Color AmbientLight::computeLight(
     const Intersection &intersection,
     const Math::Vector3D &/*viewDir*/,
+    const Ray &/*eyeRay*/,
     const std::vector<std::unique_ptr<IPrimitive>> &/*primitives*/
 ) const
 {

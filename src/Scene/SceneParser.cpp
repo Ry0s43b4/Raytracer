@@ -90,6 +90,22 @@ std::vector<SphereData> SceneParser::parseSpheres() const
         sphere.color = parseColor(s.lookup("color"));
         sphere.transform = parseTransformIfAny(s);
 
+        if (s.exists("material")) {
+            const libconfig::Setting &m = s.lookup("material");
+
+            try {
+                sphere.materialType = static_cast<const char *>(m.lookup("type"));
+                if (m.exists("ior"))
+                    sphere.materialIor = m.lookup("ior");
+                if (m.exists("transmission"))
+                    sphere.materialTransmission = m.lookup("transmission");
+            } catch (const libconfig::SettingException &e) {
+                throw RaytracerError(
+                    "Invalid or missing sphere material field: " + std::string(e.getPath())
+                );
+            }
+        }
+
         spheres.push_back(sphere);
     }
 

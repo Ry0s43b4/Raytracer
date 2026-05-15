@@ -8,6 +8,7 @@
 #include <algorithm>
 #include <memory>
 #include <vector>
+
 #include "Lights/DirectionalLight.hpp"
 #include "Primitives/IPrimitive.hpp"
 #include "Math/Ray.hpp"
@@ -24,6 +25,7 @@ DirectionalLight::DirectionalLight(const Math::Vector3D &direction, double inten
 Color DirectionalLight::computeLight(
     const Intersection &intersection,
     const Math::Vector3D &/*viewDir*/,
+    const Ray &/*eyeRay*/,
     const std::vector<std::unique_ptr<IPrimitive>> &primitives
 ) const
 {

@@ -14,7 +14,8 @@ Intersection::Intersection()
       _distance(0.0),
       _point(),
       _normal(),
-      _color()
+      _color(),
+      _material(nullptr)
 {
 }
 
@@ -23,13 +24,15 @@ Intersection::Intersection(
     double distance,
     const Math::Vector3D &point,
     const Math::Vector3D &normal,
-    const Color &color
+    const Color &color,
+    const std::shared_ptr<IMaterial> &material
 )
     : _hit(hit),
       _distance(distance),
       _point(point),
       _normal(normal),
-      _color(color)
+      _color(color),
+      _material(material)
 {
 }
 
@@ -58,6 +61,11 @@ const Color &Intersection::color() const
     return _color;
 }
 
+const std::shared_ptr<IMaterial> &Intersection::material() const
+{
+    return _material;
+}
+
 void Intersection::setHit(bool hit)
 {
     _hit = hit;
@@ -81,6 +89,16 @@ void Intersection::setNormal(const Math::Vector3D &normal)
 void Intersection::setColor(const Color &color)
 {
     _color = color;
+}
+
+void Intersection::setMaterial(const std::shared_ptr<IMaterial> &material)
+{
+    _material = material;
+}
+
+bool Intersection::frontFace(const Ray &r_in) const
+{
+    return r_in.direction().dot(_normal) < 0.0;
 }
 
 }

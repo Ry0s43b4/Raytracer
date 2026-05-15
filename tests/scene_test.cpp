@@ -1,7 +1,9 @@
 #include <criterion/criterion.h>
 #include <memory>
+#include <vector>
 
 #include "Lights/ILight.hpp"
+#include "Math/Ray.hpp"
 #include "Math/Vector3D.hpp"
 #include "Primitives/IPrimitive.hpp"
 #include "Scene/Camera.hpp"
@@ -21,7 +23,9 @@ class FakeLight : public RayTracer::ILight {
 public:
     RayTracer::Color computeLight(
         const RayTracer::Intersection &,
-        const Math::Vector3D &
+        const Math::Vector3D &,
+        const RayTracer::Ray &,
+        const std::vector<std::unique_ptr<RayTracer::IPrimitive>> &
     ) const override
     {
         return RayTracer::Color(0, 0, 0);
