@@ -14,9 +14,10 @@ namespace RayTracer {
         const Math::Vector3D &ellipsoidAxis,
         double radius,
         double distance,
-        const Color &color
+        const Color &color,
+        const std::shared_ptr<IMaterial> &material
     )
-    : _center(center), _ellipsoidAxis(ellipsoidAxis.normalized()), _radius(radius), _distance(distance), _color(color)
+    : _center(center), _ellipsoidAxis(ellipsoidAxis.normalized()), _radius(radius), _distance(distance), _color(color), _material(material)
     {
     }
     
@@ -41,9 +42,9 @@ namespace RayTracer {
                 return Intersection();
         }
         Math::Vector3D point  = ray.at(distance);
-        Math::Vector3D cmid = _center + _ellipsoidAxis * (_distance / 2);
-        Math::Vector3D R = point - cmid;
-        Math::Vector3D normal = (R - _ellipsoidAxis * (1 - (b * b) / (a * a)) * (R.dot(_ellipsoidAxis)));
-        return Intersection(true, distance, point, normal.normalized(), _color);
+        Math::Vector3D x_pt   = point - _center;
+        double A2_pt = (_radius * _radius) + 2.0 * _distance * x_pt.dot(_ellipsoidAxis) - _distance;
+        Math::Vector3D normal = x_pt * (2.0 * _radius * _radius) - _ellipsoidAxis * (_distance * A2_pt);
+        return Intersection(true, distance, point, normal.normalized(), _color, _material);
     }
 }
