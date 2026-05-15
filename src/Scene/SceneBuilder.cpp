@@ -13,6 +13,7 @@
 #include "Primitives/Plane.hpp"
 #include "Primitives/Cylinder.hpp"
 #include "Primitives/Cone.hpp"
+#include "Primitives/Ellipsoid.hpp"
 #include "Primitives/TransformedPrimitive.hpp"
 #include "Transformation/TransformationComposer.hpp"
 #include "Lights/AmbientLight.hpp"
@@ -33,6 +34,7 @@ Scene SceneBuilder::build(const SceneData &data)
     addLights(scene, data.lights);
     addCylinders(scene, data.cylinders);
     addCones(scene, data.cones);
+    addEllipsoids(scene, data.ellipsoids);
     return scene;
 }
 
@@ -160,6 +162,28 @@ void SceneBuilder::addCones(Scene &scene, const std::vector<ConeData> &cones)
             p.radius,
             p.maximum,
             p.minimum,
+            Color(p.color.r, p.color.g, p.color.b)
+        ));
+    }
+}
+
+void SceneBuilder::addEllipsoids(Scene &scene, const std::vector<EllipsoidData> &ellipsoids)
+{
+    for (const auto &p : ellipsoids) {
+        Math::Vector3D normal;
+
+        if (p.axis == "X")
+            normal = Math::Vector3D(1, 0, 0);
+        else if (p.axis == "Y")
+            normal = Math::Vector3D(0, 1, 0);
+        else
+            normal = Math::Vector3D(0, 0, 1);
+
+        scene.addPrimitive(std::make_unique<Ellipsoid>(
+            Math::Vector3D(p.x, p.y, p.z),
+            normal,
+            p.radius,
+            p.distance,
             Color(p.color.r, p.color.g, p.color.b)
         ));
     }

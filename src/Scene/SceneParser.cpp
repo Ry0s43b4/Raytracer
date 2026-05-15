@@ -27,7 +27,7 @@ SceneData SceneParser::parse()
     data.lights = parseLights();
     data.cylinders = parseCylinders();
     data.cones = parseCones();
-
+    data.ellipsoids = parseEllipsoids();
     return data;
 }
 
@@ -172,6 +172,33 @@ std::vector<ConeData> SceneParser::parseCones() const
     }
 
     return cones;
+}
+
+std::vector<EllipsoidData> SceneParser::parseEllipsoids() const
+{
+    std::vector<EllipsoidData> ellipsoids;
+
+    if (!_config.exists("primitives.ellipsoids"))
+        return ellipsoids;
+
+    const libconfig::Setting &settings = _config.lookup("primitives.ellipsoids");
+
+    for (int i = 0; i < settings.getLength(); ++i) {
+        const libconfig::Setting &c = settings[i];
+
+        EllipsoidData ellipsoid;
+        ellipsoid.x = c.lookup("x");
+        ellipsoid.y = c.lookup("y");
+        ellipsoid.z = c.lookup("z");
+        ellipsoid.axis = static_cast<const char *>(c.lookup("axis"));
+        ellipsoid.radius = c.lookup("r");
+        ellipsoid.distance = c.lookup("distance");
+        ellipsoid.color = parseColor(c.lookup("color"));
+
+        ellipsoids.push_back(ellipsoid);
+    }
+
+    return ellipsoids;
 }
 
 LightData SceneParser::parseLights() const

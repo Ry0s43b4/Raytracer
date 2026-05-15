@@ -23,6 +23,7 @@ private:
     void addPlanes(Scene &scene, const std::vector<PlaneData> &planes);
     void addCylinders(Scene &scene, const std::vector<CylinderData> &cylinders);
     void addCones(Scene &scene, const std::vector<ConeData> &cones);
+    void addEllipsoids(Scene &scene, const std::vector<EllipsoidData> &ellipsoids);
     void addLights(Scene &scene, const LightData &lights);
 };
 

@@ -76,6 +76,16 @@ struct ConeData {
     ColorData color;
 };
 
+struct EllipsoidData {
+    double x;
+    double y;
+    double z;
+    std::string axis;
+    double radius;
+    double distance;
+    ColorData color;
+};
+
 struct DirectionalLightData {
     double x;
     double y;
@@ -101,6 +111,7 @@ struct SceneData {
     std::vector<PlaneData> planes;
     std::vector<CylinderData> cylinders;
     std::vector<ConeData> cones;
+    std::vector<EllipsoidData> ellipsoids;
     LightData lights;
 };
 
