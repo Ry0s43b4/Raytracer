@@ -84,6 +84,17 @@ Color Renderer::traceRay(const Ray &ray, const Scene &scene, int depth) const
     Color direct = computeDirectLighting(hit, ray, scene);
 
     if (hit.material()) {
+        if (hit.material()->needsSpecular()) {
+            Math::Vector3D viewDir = (ray.origin() - hit.point()).normalized();
+            Color specular = computeSpecularLighting(
+                hit, viewDir,
+                hit.material()->shininess(),
+                hit.material()->specularStrength(),
+                scene
+            );
+            direct = Color::add(direct, specular);
+        }
+
         bool frontFace = hit.frontFace(ray);
 
         return hit.material()->shade(
@@ -97,6 +108,29 @@ Color Renderer::traceRay(const Ray &ray, const Scene &scene, int depth) const
     }
 
     return direct;
+}
+
+Color Renderer::computeSpecularLighting(
+    const Intersection &intersection,
+    const Math::Vector3D &viewDir,
+    double shininess,
+    double specularStrength,
+    const Scene &scene
+) const
+{
+    Color specular;
+
+    for (const auto &light : scene.lights()) {
+        Color s = light->computeSpecular(
+            intersection, viewDir, shininess, specularStrength, scene.primitives()
+        );
+        specular.r += s.r;
+        specular.g += s.g;
+        specular.b += s.b;
+    }
+
+    specular.clamp();
+    return specular;
 }
 
 }
