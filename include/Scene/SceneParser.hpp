@@ -31,6 +31,7 @@ private:
     std::vector<PlaneData> parsePlanes() const;
     std::vector<CylinderData> parseCylinders() const;
     std::vector<ConeData> parseCones() const;
+    std::vector<EllipsoidData> parseEllipsoids() const;
     LightData parseLights() const;
 
     std::vector<PointLightData> parsePointLights() const;
