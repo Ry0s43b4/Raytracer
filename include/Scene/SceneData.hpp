@@ -61,6 +61,11 @@ struct PlaneData {
     std::string axis;
     double position;
     ColorData color;
+    std::string materialType;
+    double materialIor = 1.5;
+    double materialTransmission = 0.65;
+    double materialShininess = 32.0;
+    double materialSpecularStrength = 0.5;
 };
 
 struct CylinderData {
@@ -71,6 +76,11 @@ struct CylinderData {
     double radius;
     ColorData color;
     TransformData transform;
+    std::string materialType;
+    double materialIor = 1.5;
+    double materialTransmission = 0.65;
+    double materialShininess = 32.0;
+    double materialSpecularStrength = 0.5;
 };
 
 struct ConeData {
@@ -82,6 +92,11 @@ struct ConeData {
     double minimum;
     double maximum;
     ColorData color;
+    std::string materialType;
+    double materialIor = 1.5;
+    double materialTransmission = 0.65;
+    double materialShininess = 32.0;
+    double materialSpecularStrength = 0.5;
 };
 
 struct EllipsoidData {
@@ -92,6 +107,11 @@ struct EllipsoidData {
     double radius;
     double distance;
     ColorData color;
+    std::string materialType;
+    double materialIor = 1.5;
+    double materialTransmission = 0.65;
+    double materialShininess = 32.0;
+    double materialSpecularStrength = 0.5;
 };
 
 struct DirectionalLightData {
