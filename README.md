@@ -44,7 +44,7 @@ Run the executable by passing your scene configuration file as an argument:
 
 ## 👥 Authors
 
-* **André Frappier**(https://github.com/AndreFRAPPIER)
-* **Noah Heurtaut**(https://github.com/noahhrt)
-* **Thomas Leboucq**(https://github.com/Zeusisss)
-* **Nicky Truong**
+* [**André Frappier**](https://github.com/AndreFRAPPIER)
+* [**Noah Heurtaut**](https://github.com/noahhrt)
+* [**Thomas Leboucq**](https://github.com/Zeusisss)
+* [**Nicky Truong**](https://github.com/Ry0s43b4)
